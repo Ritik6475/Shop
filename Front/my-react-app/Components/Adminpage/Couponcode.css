@@ -1,0 +1,26 @@
+.couponcode-container {
+    text-align: center;
+    margin-top: 400px;
+background-color: black;
+color: wheat;
+font-family: 'Nunito', sans-serif;
+  
+}
+  
+  .couponcode-container h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .couponcode-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .couponcode-container p {
+    margin-top: 20px;
+    font-size: 18px;
+    color: green;
+  }
+  

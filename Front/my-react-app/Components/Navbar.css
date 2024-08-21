@@ -1,0 +1,279 @@
+
+/* Reset styles */
+
+/* Reset styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+body {
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+}
+
+.promo-banner {
+  width: 100%;
+  height: 50px;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  z-index: 1200;
+  border-bottom: 1px solid #ccc;
+  white-space: nowrap;
+  margin-top: 127px;
+  margin-left: -20px;
+  /* The animation should target only the text */
+}
+
+.promo-content {
+  display: flex;
+  width: 100%;
+
+}
+
+
+/* Create a container to handle the scrolling effect */
+.promo-text {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 50px; /* Space between texts */
+}
+
+.promo-text img {
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+}
+
+.promo-text p {
+  font-size: 14px;
+}
+
+/* Keyframes for scrolling animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Animation controls on hover */
+.promo-banner:hover .promo-content {
+  animation-play-state: running; /* Ensure animation runs on hover */
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0; 
+  left: 0;
+  width: 100%;
+  height: 80px;
+  padding: 10px 20px;
+  background-color: White;
+  z-index: 1100;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+}
+
+/* Other styles as per your existing code */
+
+/* Other styles as per your existing code */
+
+
+.logo {
+  margin-right: 330px;  
+  position: sticky;
+}
+
+.logo-img img {
+  height: 95px;
+  width: 128px;
+  border-radius: 50%;
+  margin-top: 15px;
+  margin-left: 20px;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  color: black;
+  font-weight: bolder;
+  margin-top: 10px;
+}
+
+.input {
+  width: 53%;
+  height: 50px;
+  border-radius: 10px;
+  font-size: 16px;
+  border: none;
+  padding-left: 15px; /* Ensure the placeholder starts from the leftmost side */
+  background-color: rgba(128, 128, 128, 0.395);
+  font-family: 'Nunito', sans-serif;
+
+}
+
+.input::placeholder {
+  color: black;
+  font-size: 15px;
+}
+
+.searchicon {
+  margin-left: -40px; /* Adjust the margin to align the icon with the input */
+  color: black;
+  cursor: pointer;
+  margin-top: 6px;
+}
+
+.user-icons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile-user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.profile-user a {
+  text-decoration: none;
+  color: black;
+}
+
+.profile-name {
+  font-size: 14px;
+  margin-top: 5px;
+  font-weight: 600;
+  color: black;
+  background-color: orange;
+  height: 30px;
+  width: 160px;
+  font-size: 18px;
+  margin-top: -10px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.profile-name p {
+  margin-top: 10px;
+}
+
+.wishlist-name,
+.bag-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: maroon;
+}
+
+.wishlist-name:hover,
+.bag-name:hover {
+  border-bottom: 3px solid transparent;
+  transform: translateY(3px);
+}
+
+.nav2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;  
+  top: 80px;
+  width: 100%;
+  padding: 10px 0;
+  background-color: White;
+  z-index: 1100;
+}
+
+.nav2 a {
+  text-decoration: none;
+  color: maroon;
+  font-size: 14px;
+  padding: 5px 10px;
+  margin: 0 10px;
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  
+}
+
+.nav2 a:hover {
+  color: white;
+  background-color: maroon;
+  border-radius: 5px;
+}
+
+.search-results {
+  position: absolute;
+  top: 80px;
+  left: 0;
+  right: 0;
+  max-height: 400px;
+  overflow-y: auto;
+  background-color: white;
+  z-index: 1200;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-result-item {
+  display: flex;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.search-result-item img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.product-details {
+  flex: 1;
+}
+
+.product-details h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.product-details p {
+  margin: 2px 0;
+  font-size: 14px;
+}
+
+/* Search Bar Styles */
+.input:focus {
+  background-color: white; /* Change background on focus */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add shadow effect */
+  outline: none; /* Remove default outline */
+}
+
+/* Cart count badge */
+.cart-count {
+  width: 15px;
+  background-color: red;
+  color: white;
+  border-radius: 40%;
+  padding: 2px 6px;
+  font-size: 12px;
+  position: absolute;
+  margin-top: -15px;
+  margin-left: -1px;
+}

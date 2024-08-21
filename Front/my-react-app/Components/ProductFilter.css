@@ -1,0 +1,165 @@
+.product-filter {
+    width: 300px; /* Slightly narrower for a more compact look */
+    max-height: 100vh;
+    padding: 15px; /* Reduced padding for a more compact design */
+    background-color: white; /* Slightly different background for a fresh look */
+    border-radius: 8px; /* Slightly smaller border radius */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Softer shadow */
+    overflow-y: auto;
+    overflow-x: hidden; /* Prevent horizontal overflow */
+margin-right: 0px;
+font-family: 'Nunito', sans-serif;
+font-size: 14px; /* Default body text size */
+position: sticky;
+
+}
+
+.product-filter h3 {
+    margin-bottom: 15px; /* Reduced margin for compactness */
+    font-size: 22px; /* Slightly smaller font size */
+    color: #333;
+    padding-bottom: 12px; /* Reduced padding for compact look */
+    background-color: #fff;
+    border-bottom: 1px solid #ddd; /* Thinner border for a lighter feel */
+    font-weight: bold;
+}
+
+
+
+.remove-filters-button {
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 4px; /* Slightly smaller border radius */
+    padding: 6px 10px; /* Reduced padding for a more compact button */
+    cursor: pointer;
+    font-size: 15px; /* Smaller font size */
+    margin-bottom: 15px; /* Reduced margin */
+    
+    /* Flexbox to align image and text */
+    display: flex;
+    align-items: center; /* Align items vertically center */
+    gap: 5px; /* Space between the image and text */
+    font-family: 'Nunito', sans-serif;
+    font-weight: 500; /* Medium */
+    font-size: 15px; /* 0.75rem */
+  
+}
+
+.remove-filters-button img {
+    height: 23px;
+    width: 23px;
+    margin-left: 60px;
+}
+.remove-filters-button:hover {
+    background: #e64a19;
+}
+
+.filter-section {
+    margin-bottom: 15px; /* Reduced margin for compactness */
+
+}
+
+.filter-section h4 {
+    font-size: 16px; /* Smaller font size for section headers */
+    color: #555;
+    padding-bottom: 8px; /* Reduced padding */
+    border-bottom: 1px solid #ddd; /* Thinner border */
+    font-family: 'Nunito', sans-serif;
+    font-weight: 400; /* Regular */
+    font-size: 24px; /* 1.5rem */
+
+}
+
+.filter-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 200px; /* Reduced height for a more compact look */
+    overflow-y: auto;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 400; /* Regular */
+  font-size: 14px; /* 0.875rem */
+
+
+}
+
+.filter-list li {
+    display: flex;
+    
+    font-size: 12px; /* Reduced font size for list items */
+    color: #333;
+    margin-top: -14px; /* Reduced margin between list items */
+    font-family: 'Nunito', sans-serif;
+    font-weight: 400; /* Regular */
+  font-size: 14px; /* 0.875rem */
+
+
+}
+
+.filter-list li input[type="checkbox"] {
+    margin-right: 8px; /* Reduced margin for a more compact look */
+    height: 16px; /* Smaller checkbox */
+    width: 16px; /* Smaller checkbox */
+    border: 1px solid #bbb;
+    border-radius: 3px;
+    margin-top: 25px;
+}
+
+.filter-list li label {
+    display: flex;
+    align-items: center;
+    font-size: 14px; /* Reduced font size for labels */
+
+}
+
+.color-dot {
+    width: 14px; /* Smaller color dot */
+    height: 14px; /* Smaller color dot */
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px; /* Reduced margin */
+    border: 1px solid #ddd;
+}
+
+.star {
+    color: green;
+    font-size: 14px; /* Smaller star size */
+    margin-right: 1px; /* Reduced margin */
+
+}
+
+.apply-filter-button {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 500; /* Medium */
+    font-size: 12px; /* 0.75rem */
+  
+    width: 100%;
+    padding: 10px; /* Reduced padding for a more compact button */
+    background-color: maroon;
+    color: white;
+    border: none;
+    border-radius: 4px; /* Smaller border radius */
+    cursor: pointer;
+    font-size: 14px; /* Smaller font size */
+    text-align: center;
+    margin-top: 15px;
+
+}
+
+.apply-filter-button:hover {
+    background-color: black
+
+}
+
+.scrollable-container {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.scrollable-line {
+    display: inline-block;
+}
+
+
+

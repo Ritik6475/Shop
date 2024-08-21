@@ -1,0 +1,78 @@
+/* Allorders.css */
+
+.all-orders-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-family: 'Nunito', sans-serif;
+
+}
+
+.page-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.order-section {
+    width: 100%;
+}
+
+.order-item,
+.bundle-order-item {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.order-details {
+    margin-bottom: 10px;
+}
+
+.order-details address {
+    font-style: normal;
+}
+
+.order-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.order-actions button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.order-actions button:hover {
+    background-color: #0056b3;
+}
+
+
+.red-button {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 20px; /* Adjust margin as needed */
+  }
+  

@@ -1,0 +1,39 @@
+.coupon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    font-family: 'Nunito', sans-serif;
+
+}
+
+.coupon-input-section {
+    display: flex;
+    align-items: center;
+}
+
+.coupon-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.coupon-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.apply-coupon-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.apply-coupon-button:hover {
+    background-color: #45a049;
+}

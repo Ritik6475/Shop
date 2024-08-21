@@ -1,0 +1,127 @@
+/* General styles */
+.search-results-container {
+    margin-top: 60px;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 200px;
+    justify-content: center;
+    font-family: 'Nunito', sans-serif;
+
+}
+
+.search-page-header {
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Card container */
+.search-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    /* Ensure cards are centered if there is only one */
+}
+
+/* Responsive card styling */
+.search-product-card {
+    padding: 10px;
+    border-radius: 10px;
+    flex: 1 1 calc(25% - 20px); /* Adjust width for multiple items */
+    max-width: 250px; /* Optional: set a maximum width for larger screens */
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Ensure cards scale properly */
+.search-product-card:hover {
+    transform: scale(1.05);
+}
+
+/* Product image */
+.search-product-image {
+    width: 100%;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.search-product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.search-quick-view {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgb(128, 0, 0);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.search-product-card:hover .search-quick-view {
+    opacity: 1;
+}
+
+/* Product details */
+.search-product-details {
+    padding: 10px;
+    text-align: left;
+}
+
+.search-product-brand {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.search-product-name {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.search-price-discount {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-product-price {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+}
+
+.search-product-old-price {
+    font-size: 18px;
+    text-decoration: line-through;
+    color: black;
+}
+
+.search-product-discount {
+    font-size: 18px;
+    color: rgba(128, 0, 0, 0.544);
+}
+
+.search-product-rating .search-star {
+    color: gold;
+    font-size: 18px;
+}
