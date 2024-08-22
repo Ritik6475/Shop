@@ -98,7 +98,7 @@ const __dirname = path.dirname(__filename);
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-
+  
 
 app.get('/',(req,res)=>{
     res.send("Made via router");
