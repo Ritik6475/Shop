@@ -3,7 +3,7 @@ import axios from 'axios';
 import './Card2.css';
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
-import ProductFilter from './ProductFilter';
+import ProductFilter from './ProductFilter';  
 import axiosInstance from '@axios';
 
 const Card2 = ({ category, isLoggedIn, userId }) => {
@@ -144,10 +144,12 @@ const Card2 = ({ category, isLoggedIn, userId }) => {
                         <div className="card2-product-image">
 
 
-                              {<img src={`${import.meta.env.VITE_API_BASE_URL}${product.image}`} alt={product.productname} />};
+                              {/* {<img src={`./api${product.image}`} alt={product.productname} />}; */}
 
 
-{/* {<img src={`${import.meta.env.VITE_API_BASE_URL}${product.image}`} alt={product.productname} />} */}
+                        {<img src={`${import.meta.env.VITE_API_BASE_URL}${product.image}`} alt={product.productname} />}
+
+                      {/* {<img src={`${import.meta.env.VITE_API_BASE_URL}${product.image}`} alt={product.productname} />} */}
 
                  
                  

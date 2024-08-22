@@ -94,7 +94,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Serve the images folder statically
-app.use('/uploads/images', express.static(path.join(__dirname, 'uploads/images')));
+// app.use('/uploads/images', express.static(path.join(__dirname, 'uploads/images')));
+
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
+
 
 app.get('/',(req,res)=>{
     res.send("Made via router");
