@@ -2,14 +2,64 @@
 //Necessary imports
 //////////////////////////////////////////////////////////////
 
+import express from "express";
+import cors from 'cors'; 
+const app = express();
+const PORT = process.env.PORT || 2450 ;
 
 import path from "path";
-import mongoose  from "mongoose";  
-import express from "express";
-const app = express();
+import mongoose  from "mongoose"; 
+
+
+
+const corsOptions = {
+  origin: 'https://shreejee-attires.web.app',
+  methods: 'GET,POST,PUT,DELETE,OPTIONS',
+  allowedHeaders: 'Content-Type, Authorization',
+};
+
+app.options('*', cors(corsOptions)); // Handle preflight requests
+
+app.use((req, res, next) => {
+  console.log('CORS applied');
+  next();
+});
+
+// Any custom middlewares or routes
+app.use((req, res, next) => {
+  console.log('Custom middleware or routes');
+  next();
+});
+
+// Example route to ensure response flow is as expected
+app.get('/test', (req, res) => {
+  console.log('Responding to /test');
+  res.send('Test route response');
+});
+
+// Error logging
+app.use((err, req, res, next) => {
+  console.error('Error encountered:', err);
+  next();
+});
+
+app.listen(PORT, () =>{
+
+  console.log('app is running on ' + PORT);
+
+});
+
+
+
+
+
+
+
 import dotenv from 'dotenv';
 import bodyParser from "body-parser";
-import cors from 'cors'; 
+
+
+
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import passport from "passport";
@@ -21,14 +71,16 @@ import {User,Admin,Product,NewsletterSubscriber,Ticket} from "./Databasefolder/D
 
 import helmet from 'helmet';
 import passportLocalMongoose from 'passport-local-mongoose';
-const PORT = process.env.PORT || 2000 ;
+
+
 
 app.use(bodyParser.json({ limit: '80mb' }));
 app.use(bodyParser.urlencoded({ limit: '80mb', extended: true }));
 
 
+
 app.use(helmet());
-app.use(cors());
+
 app.use(express.json());
 
 ///////miidlewares
@@ -51,12 +103,6 @@ let isLoggedIn = false;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-app.listen(PORT, () =>{
-
-    console.log('app is running on ' + PORT);
-
-});
 
 //name,email,password,number,cart,all order
 

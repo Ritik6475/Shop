@@ -24,10 +24,12 @@ function Navbar({ onProfileClick, isLoggedIn, username, userId }) {
             } catch (error) {
                 console.error('Error fetching cart count:', error);
             }  
-        };
+        };  
 
         fetchCartCount();
     }, [userId]);
+
+
 
     const handleSearch = () => {
         if (searchQuery.trim() !== '') {
@@ -113,7 +115,9 @@ function Navbar({ onProfileClick, isLoggedIn, username, userId }) {
                         <div className="bag-name">
                             <Link to="/cart">
                                 <FaShoppingCart className="wishlist" />
+                               
                                 {cartCount > 0 && <span className="cart-count">{cartCount}</span>} {/* Display cart count */}
+                               
                                 <p className="bag-name">Cart</p>
                             </Link>
                         </div>

@@ -15,7 +15,7 @@ export default defineConfig({
     proxy: {  
 
       '/api': {
-        target: 'http://localhost:2455',  // Only for development proxy
+        target: 'http://localhost:2450',  // Only for development proxy
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },

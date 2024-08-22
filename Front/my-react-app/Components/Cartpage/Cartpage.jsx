@@ -7,9 +7,10 @@
 
 import axiosInstance from '@axios';
             
-const Cartpage = ({ userId }) => {
+const Cartpage = ({ userId,isLoggedIn }) => {
               const [refreshTrigger, setRefreshTrigger] = useState(false);
-
+              const [CartCount, setCartCount] = useState(0); // State to hold the cart count
+    
               const [cart, setCart] = useState([]);
               const [totalPrice, setTotalPrice] = useState(0);
               const [totalItems, setTotalItems] = useState(0);
@@ -71,9 +72,27 @@ const Cartpage = ({ userId }) => {
 
 
 
+              useEffect(() => {
+                // Fetch cart count from the API
+                const fetchCartCount = async () => {
+                    if (!userId) {
+                        return;
+                    }
+        
+                    try {
+                        const response = await axiosInstance.post('/getCartCount', { userId,isLoggedIn});
+                        setCartCount(response.data.cartCount);
+                    } catch (error) {
+                        console.error('Error fetching cart count:', error);
+                    }  
+                };  
+        
+                fetchCartCount();
+            }, [userId]);
+        
 
 
-
+            
 
 
 
@@ -247,7 +266,7 @@ const Cartpage = ({ userId }) => {
               return (
                 <div className={`cart-page ${animationClass}`}>
                   <DeliveryAddress userId={userId} onAddressChange={setDeliveryAddress} />
-
+                  
                   
                   <div class="short-banner">
   <div class="short-content">
@@ -382,29 +401,44 @@ const Cartpage = ({ userId }) => {
 
                     <div className='separator'></div> 
 
-
                     <div className='cart-summary'>
-  <h2>PRICE DETAILS ({totalItems} Item{totalItems > 1 ? 's' : ''})</h2>
+  <h2>PRICE DETAILS ({CartCount} Item)</h2>
   <div className='summary-item'>
     <span>Total MRP:</span>
     <span>₹{totalPrice.toFixed(2)}</span>
   </div>
+ 
+  <div className='summary-item'>
+    <span>Qty:</span>
+    <span>{totalItems}</span>
+  </div>
+
   <div className='summary-item'>
     <span>Coupon Discount:</span>
-    <span style={{ color: '#239D56' }}>{discountApplied ? `-₹${(totalPrice - discountedPrice).toFixed(2)}` : 'Not Applied'}</span>
+    <span style={{ color: '#239D56' }}>
+      {discountApplied ? `-₹${(totalPrice - discountedPrice).toFixed(2)}` : 'Not Applied'}
+    </span>
   </div>
+
   <div className='summary-item'>
     <span>Platform Fee:</span>
     <span>Free</span>
   </div>
+
   <div className='summary-item'>
     <span>Shipping Fee:</span>
-    <span>{deliveryFee === 0 ? 'Free shipping for you' : '₹100'}</span>
+    <span style={{ color: deliveryFee === 0 ? '#239D56' : 'red' }}>
+      {deliveryFee === 0 ? 'Free shipping for you' : '₹100'}
+    </span>
   </div>
+
   <hr />
+
   <div className='summary-item'>
     <span style={{ marginTop: '20px', fontWeight: 'bold' }}>Total Amount:</span>
-    <span style={{ marginTop: '20px', color: '#3E3F45' }}>₹{(discountedPrice + deliveryFee).toFixed(2)}</span>
+    <span style={{ marginTop: '20px', color: '#3E3F45' }}>
+      ₹{(discountedPrice + deliveryFee).toFixed(2)}
+    </span>
   </div>
 
   <div className='coupon-summary'>
@@ -421,21 +455,22 @@ const Cartpage = ({ userId }) => {
       />
       <button className="apply-bundle-coupon-button" onClick={applyCouponForBundle}>Apply Coupon</button>
     </div>
-  </div>
+  </div>  
 
   <button
     className='checkout-button'
-   style={{marginTop:'10px'}}
+    style={{marginTop:'10px'}}
     onClick={() => {
-      if (totalItems < 2) {
-        alert('This button is for bundle orders. Please add more items to proceed.');
+      if (CartCount === 1) {
+        buyNow(cart[0]); // Assuming you want to buy the first item in the cart
       } else {
         checkout();
       }
     }}
   >
-    Place Order
+    {CartCount === 1 ? 'Buy Now' : 'Checkout'}
   </button>
+
 </div>
                   </div>
 

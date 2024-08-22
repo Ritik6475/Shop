@@ -78,6 +78,7 @@ function App() {
                 userId,
                 couponCode
             });
+
             alert(response.data.message);
         } catch (error) {
             console.error('Error applying coupon:', error);
@@ -97,6 +98,7 @@ function App() {
                 onLogout={handleLogout}
                 userId={userId}
             />
+
             <Navtwo />  
             <Routes>
                 <Route path="/loginpage" element={ <><Loginpage onLoginSuccess={handleLoginSuccess} onLogout={handleLogout} /><Footer isAdminAuthorized={isAdminAuthorized}/></> } />
