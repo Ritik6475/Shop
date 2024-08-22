@@ -1,96 +1,67 @@
 
 //Necessary imports
 //////////////////////////////////////////////////////////////
-
 import express from "express";
 import cors from 'cors'; 
-const app = express();
-const PORT = process.env.PORT || 2450 ;
 import bcrypt from 'bcryptjs';
-
 import path from "path";
-import mongoose  from "mongoose"; 
+import mongoose from "mongoose"; 
+import dotenv from 'dotenv';
+import bodyParser from "body-parser";
+import jwt from 'jsonwebtoken';
+import passport from "passport";
+import multer from "multer";
+import helmet from 'helmet';
+import { fileURLToPath } from 'url';
+import { User, Admin, Product, NewsletterSubscriber, Ticket } from "./Databasefolder/Databasemodels.js";
 
+// Initialize dotenv
+dotenv.config();
 
+// Create an express app
+const app = express();
+const PORT = process.env.PORT || 2450;
 
+// MongoDB connection
+mongoose.connect("mongodb+srv://rathodritik259:1Q2w3e4r5t@cluster123.hmrpy.mongodb.net/SAREE");
+
+// CORS configuration
 const corsOptions = {
-  origin: 'https://shreejee-attires.web.app',
-  methods: 'GET,POST,PUT,DELETE,OPTIONS',
-  allowedHeaders: 'Content-Type, Authorization',
+  origin: 'https://shreejee-attires.web.app',  // Your frontend domain
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
+  allowedHeaders: ['Content-Type', 'Authorization'],  // Allowed headers
+  credentials: true  // Enable credentials if necessary (e.g., for cookies)
 };
 
-app.options('*', cors(corsOptions)); // Handle preflight requests
+// Apply CORS middleware to all routes
+app.use(cors(corsOptions));
 
-app.use((req, res, next) => {
-  console.log('CORS applied');
-  next();
-});
+// Additional middlewares
+app.use(helmet());
+app.use(bodyParser.json({ limit: '80mb' }));
+app.use(bodyParser.urlencoded({ limit: '80mb', extended: true }));
+app.use(express.json());
 
-// Any custom middlewares or routes
-app.use((req, res, next) => {
-  console.log('Custom middleware or routes');
-  next();
-});
+// Handle preflight (OPTIONS) requests
+app.options('*', cors(corsOptions));
 
-// Example route to ensure response flow is as expected
+// Example route to test
 app.get('/test', (req, res) => {
   console.log('Responding to /test');
   res.send('Test route response');
 });
 
-// Error logging
+// Error handling middleware
 app.use((err, req, res, next) => {
   console.error('Error encountered:', err);
-  next();
+  res.status(500).json({ message: 'Internal server error.' });
 });
 
-app.listen(PORT, () =>{
-
-  console.log('app is running on ' + PORT);
-
+// Start the server
+app.listen(PORT, () => {
+  console.log('App is running on port ' + PORT);
 });
 
-
-
-
-
-
-
-import dotenv from 'dotenv';
-import bodyParser from "body-parser";
-
-
-
-import jwt from 'jsonwebtoken';
-import passport from "passport";
-import multer from "multer";
-import { fileURLToPath } from 'url';
-dotenv.config();
-
-import {User,Admin,Product,NewsletterSubscriber,Ticket} from "./Databasefolder/Databasemodels.js";
-
-import helmet from 'helmet';
-import passportLocalMongoose from 'passport-local-mongoose';
-
-
-
-app.use(bodyParser.json({ limit: '80mb' }));
-app.use(bodyParser.urlencoded({ limit: '80mb', extended: true }));
-
-
-
-app.use(helmet());
-
-app.use(express.json());
-
-///////miidlewares
-
-// mongoose.connect("mongodb://127.0.0.1:27017/SAREE")
-
-mongoose.connect("mongodb+srv://rathodritik259:1Q2w3e4r5t@cluster123.hmrpy.mongodb.net/SAREE")
-
-// const MONGODB_URI = 'mongodb+srv://rathodritik259:1Q2w3e4r5t@cluster123.hmrpy.mongodb.net/SAREE';
-   
 
 let isLoggedIn = false;
 
@@ -171,7 +142,6 @@ app.post('/newsletterSubscribe', async (req, res) => {
   });
   
 // Login route
-
 app.post('/login', async (req, res) => {
   const { mobileNumber, password } = req.body;
   console.log('Mobile Number:', mobileNumber);
@@ -179,32 +149,36 @@ app.post('/login', async (req, res) => {
 
   try {
     const user = await User.findOne({ contact: mobileNumber });
+
+    // Check if the user exists
     if (!user) {
       console.log('User not found');
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'User not found', errorType: 'UserNotFound' });
     }
 
     console.log('Stored Hashed Password:', user.password);
 
+    // Check if the password matches
     const isMatch = await bcrypt.compare(password, user.password);
     console.log('Password match status:', isMatch);
 
     if (!isMatch) {
       console.log('Invalid credentials');
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ message: 'Invalid credentials', errorType: 'InvalidPassword' });
     }
 
+    // Generate the JWT token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
     console.log('Login processing successful');
     res.json({ token, username: user.fullname, userId: user._id });
   } catch (error) {
     console.error('Login failed:', error.message);
-    res.status(500).json({ message: 'Login failed. Please try again later.' });
+
+    // Add more detailed error types here if needed
+    res.status(500).json({ message: 'Login failed. Please try again later.', errorType: error.message });
   }
 });
-
-
 
     ///////////////////////////////////////////////////////////
 
