@@ -3,7 +3,7 @@ import passport from "passport";
 
 
 
-import bcrypt from "bcrypt";  
+import bcrypt from "bcryptjs";  
   
 
 //import plm from "passport-local-mongoose"

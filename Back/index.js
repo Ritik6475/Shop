@@ -6,6 +6,7 @@ import express from "express";
 import cors from 'cors'; 
 const app = express();
 const PORT = process.env.PORT || 2450 ;
+import bcrypt from 'bcryptjs';
 
 import path from "path";
 import mongoose  from "mongoose"; 
@@ -60,7 +61,6 @@ import bodyParser from "body-parser";
 
 
 
-import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import passport from "passport";
 import multer from "multer";
