@@ -143,14 +143,14 @@ const Card2 = ({ category, isLoggedIn, userId }) => {
                     <Link to={`/product`} state={{ product }} style={{ textDecoration: 'none', color: 'inherit' }}>
                         <div className="card2-product-image">
 
-                              {/* {<img src={`./api${product.image}`} alt={product.productname} />
-                      }
-                      */}
+
+                              {<img src={`${import.meta.env.VITE_API_BASE_URL}${product.image}`} alt={product.productname} />};
 
 
-{
-                     <img src={`${import.meta.env.VITE_API_BASE_URL}${product.image}`} alt={product.productname} /> }
+{/* {<img src={`${import.meta.env.VITE_API_BASE_URL}${product.image}`} alt={product.productname} />} */}
 
+                 
+                 
                         </div>
                         <div className="card2-product-details">
                             <h3 className="card2-product-brand">{product.brandname}</h3>

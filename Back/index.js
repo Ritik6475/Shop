@@ -27,6 +27,8 @@ mongoose.connect("mongodb+srv://rathodritik259:1Q2w3e4r5t@cluster123.hmrpy.mongo
 
 // CORS configuration
 
+// app.use(cors());
+
 const corsOptions = {
   origin: 'https://shreejee-attires.web.app',  // Your frontend domain
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
@@ -73,17 +75,26 @@ let isLoggedIn = false;
 
 /////////middlewares
 
-const __filename = fileURLToPath(import.meta.url);
+// const __filename = fileURLToPath(import.meta.url);
 
 // const __dirname = path.dirname(__filename);
 
 // app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
-const __dirname = path.resolve(); // Gets the current directory path
-app.use('/uploads/images', express.static(path.join(__dirname, 'uploads/images')));
+// const __dirname = path.resolve(); // Gets the current directory path
+// app.use('/uploads/images', express.static(path.join(__dirname, 'uploads/images')));
+
+
+
 
 //name,email,password,number,cart,all order
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve the images folder statically
+app.use('/uploads/images', express.static(path.join(__dirname, 'uploads/images')));
 
 app.get('/',(req,res)=>{
     res.send("Made via router");
