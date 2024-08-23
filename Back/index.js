@@ -11,7 +11,9 @@ import bodyParser from "body-parser";
 import jwt from 'jsonwebtoken';
 import passport from "passport";
 import multer from "multer";
+
 import helmet from 'helmet';
+
 import { fileURLToPath } from 'url';
 import { User, Admin, Product, NewsletterSubscriber, Ticket } from "./Databasefolder/Databasemodels.js";
 
@@ -40,7 +42,11 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Additional middlewares
-app.use(helmet());
+app.use(helmet({
+  crossOriginResourcePolicy: false,  // Disable cross-origin resource policy
+}));
+
+
 app.use(bodyParser.json({ limit: '80mb' }));
 app.use(bodyParser.urlencoded({ limit: '80mb', extended: true }));
 app.use(express.json());
@@ -99,7 +105,11 @@ const __dirname = path.dirname(__filename);
   // app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // Serve images with a more open CORS policy
-app.use('/uploads', cors(), express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', (req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://shreejee-attires.web.app');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  next();
+}, express.static(path.join(__dirname, 'uploads')));
 
 
 app.get('/',(req,res)=>{
