@@ -144,14 +144,9 @@ const Card2 = ({ category, isLoggedIn, userId }) => {
                         <div className="card2-product-image">
 
 
-                              {/* {<img src={`./api${product.image}`} alt={product.productname} />};  */}
+                              <img src={`${import.meta.env.VITE_API_BASE_URL}${product.image.startsWith('/') ? product.image : `/${product.image}`}`} alt={product.productname} />
 
-                             { <img src={`${import.meta.env.VITE_API_BASE_URL}${product.image}`} alt={product.productname} />}
-
-                        {/* {<img src={`${import.meta.env.VITE_API_BASE_URL}${product.image}`} alt={product.productname} />} */}
-
-                      {/* {<img src={`${import.meta.env.VITE_API_BASE_URL}${product.image}`} alt={product.productname} />} */}
-
+                           
                  
                  
                         </div>
