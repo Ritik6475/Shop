@@ -98,7 +98,8 @@ const __dirname = path.dirname(__filename);
 
   // app.use('/images', express.static(path.join(__dirname, 'images')));
 
-  app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Serve images with a more open CORS policy
+app.use('/uploads', cors(), express.static(path.join(__dirname, 'uploads')));
 
 
 app.get('/',(req,res)=>{
