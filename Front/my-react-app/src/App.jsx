@@ -125,7 +125,9 @@ function App() {
                 <Route path="/buynow" element={<Paymentgateway />} />
                 <Route path="/product" element={<Selectproductpage isLoggedIn={isLoggedIn} userId={userId} />} />
                 <Route path="/regionalattires" element={<Regionalattires isLoggedIn={isLoggedIn} userId={userId} />} />
+
                 <Route path="/edit-product" element={<EditProduct />} />
+                
                 <Route path="/feedback" element={<Feedback isLoggedIn={isLoggedIn} userId={userId} />} />
                 <Route path="/offers" element={<Offerpage applyCoupon={applyCoupon} />} />
                 <Route path="/admin-password" element={<PasswordPrompt setIsAuthorized={setIsAdminAuthorized} />

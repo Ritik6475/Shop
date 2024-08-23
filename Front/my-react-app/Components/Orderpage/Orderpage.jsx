@@ -332,12 +332,13 @@ const Orderpage = ({ userId }) => {
           <div className='flipkart-order-details'>
             <div className='flipkart-order-img'>
            
-              {<img src={`/api${order.image}`} alt={order.productName} />
+              {/* {<img src={`/api${order.image}`} alt={order.productName} />
             }
-           
+            */}
           
-           {/* <img src={`${import.meta.env.VITE_API_BASE_URL}${order.image}`} alt={order.productName} />
-        */}
+           { <img src={`${import.meta.env.VITE_API_BASE_URL}${order.image}`} alt={order.productName} />
+        }
+
 {/* 
 <img src={`${import.meta.env.VITE_API_BASE_URL}/uploads/images/${order.image}`} alt={order.productName} /> */}
 
@@ -475,11 +476,15 @@ const Orderpage = ({ userId }) => {
               <div key={product._id} className='flipkart-order-item'>
                 <div className='flipkart-order-details'>
                   <div className='flipkart-order-img'>
-                    { <img src={`/api${product.image}`} alt={product.productName} />
-               }
+                  
+                    {/* { <img src={`/api${product.image}`} alt={product.productName} />
+               
+               } */}
+
               
-                    {/* <img src={`${import.meta.env.VITE_API_BASE_URL}${product.image}`} alt={product.productname} />
-                   */}
+                    {<img src={`${import.meta.env.VITE_API_BASE_URL}${product.image}`} alt={product.productname} />
+                   }
+                  
                   
                   {/* {<img src={`${import.meta.env.VITE_API_BASE_URL}/uploads/images/${product.image}`} alt={order.productName} />} */}
 
