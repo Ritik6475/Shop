@@ -5,6 +5,8 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    
+   
 }
 
 
@@ -20,7 +22,7 @@ button {
 /* Styles specific to the Signuppage component */
 .Registerform {
   overflow-y: auto; /* Enable scrolling if content overflows */
-  max-height: 700px; /* Limit the max height to ensure it fits within the container */
+  max-height: 500px; /* Limit the max height to ensure it fits within the container */
   font-family: 'Nunito', sans-serif;
 
 }
@@ -262,9 +264,13 @@ input {
 
 .submit {
     
-    background: #d4af7a;
+    background: maroon;
     text-transform: uppercase;
     margin-top: 10px;
+
+}
+.submit:hover {
+background-color: black;
 }
 
 .error-message {

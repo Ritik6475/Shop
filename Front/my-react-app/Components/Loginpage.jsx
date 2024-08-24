@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';  
 // import axios from 'axios';
-import Signuppage from './Signuppage'; 
+import Signuppage from './Signuppage';   
 import './Loginpage.css';
 
 import axiosInstance from '@axios';
@@ -13,9 +13,9 @@ const Loginpage = ({ onLoginSuccess, onLogout }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
 
     const handleSignupClick = () => {
-        setShowSignup(true);
+        setShowSignup(true);  
     };
-
+  
     const handleLogin = async (e) => {
         e.preventDefault();
 
@@ -72,7 +72,7 @@ const Loginpage = ({ onLoginSuccess, onLogout }) => {
     };
 
     return (
-        <div className={`cont ${showSignup ? 's--signup' : ''}`} style={{marginTop:'150px'}}>
+        <div className={`cont ${showSignup ? 's--signup' : ''}`} style={{marginTop:'150px',fontFamily:'Nunito'}}>
 
             {isLoggedIn && (
                 <button onClick={handleLogout} className="logout-button">
@@ -80,7 +80,7 @@ const Loginpage = ({ onLoginSuccess, onLogout }) => {
                 </button>
             )}
 
-            <div className="form sign-in">
+            <div className="form sign-in" style={{fontFamily:'Nunito'}}>
                 <h2>Welcome</h2>
                 <form onSubmit={handleLogin}>
                     <label>

@@ -68,31 +68,24 @@ function Navbar({ onProfileClick, isLoggedIn, username, userId }) {
     </div>
   </div>
 </div>
+            <div className="search" >
+                <input
+                    className="input"  
+                    type="text"
+                    placeholder="Search for Price, Products, Brands and More"
+                    value={searchQuery}
+                    onChange={handleInputChange}
+                    onKeyPress={(event) => event.key === 'Enter' && handleSearch()}
+                />
+                <FaSearch className="searchicon" onClick={handleSearch} />
+            </div>
+            <Link className="logo-img" to="/">
 
-
-
-
-
-
-                <div className="search">
-                    <input
-                        className="input"
-                        type="text"
-                        placeholder="Search for Price, Products, Brands and More        "
-                        value={searchQuery}
-                        onChange={handleInputChange}
-                        onKeyPress={(event) => event.key === 'Enter' && handleSearch()}
-                    />
-                    <FaSearch className="searchicon" onClick={handleSearch} />
-                </div>
-                <div className="logo" style={{ marginRight: '330px',  position:'sticky'}}>
-                    <Link className="logo-img" to="/">
-                        <img
-                            src="https://aartisto.com/wp-content/uploads/2020/11/myntra.png"
-                            alt="logo"
-                        />
-                    </Link>
-                </div>
+            <div className="logo">
+                <img src="https://aartisto.com/wp-content/uploads/2020/11/myntra.png" alt="logo" />
+            </div>
+            </Link>
+  
                 
                 <div className="user-icons">
                     <div className="profile-user" onClick={onProfileClick}>
@@ -109,7 +102,7 @@ function Navbar({ onProfileClick, isLoggedIn, username, userId }) {
                                     </Link>
                         </div>
                     </div>  
-
+  
 
                     <div className="profile-user">
                         <div className="bag-name">
@@ -134,6 +127,14 @@ function Navbar({ onProfileClick, isLoggedIn, username, userId }) {
                 </div>
                 
             </nav>
+
+
+
+
+
+
+
+            
             
             <div className="nav2">
                 <Link to="/womenwestern">WOMEN WESTERN</Link>

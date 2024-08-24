@@ -538,6 +538,13 @@
     margin-bottom: 10px;
 }
 
+.similarcards h2{
+
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+    margin-left: 00px;
+}
+
 .spec-key {
     font-weight: bold;
     color: #222;

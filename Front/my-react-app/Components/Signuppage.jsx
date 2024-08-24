@@ -3,7 +3,9 @@ import React, { useState,useEffect } from 'react';
 
 import './Signuppage.css';
 
-import axiosInstance from '@axios';
+import axiosInstance from '@axios';                                                                                     
+
+
 
 const Signuppage = ({ setShowSignup }) => {
     const [fullname, setFullname] = useState('');
@@ -15,9 +17,9 @@ const Signuppage = ({ setShowSignup }) => {
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [postalCode, setPostalCode] = useState('');
-    const [country, setCountry] = useState('');
-
-
+    const [country, setCountry] = useState('');   
+  
+ 
     const handleSignup = async (e) => {
         e.preventDefault();
 
@@ -58,11 +60,10 @@ const Signuppage = ({ setShowSignup }) => {
     
 
     return (
-        <div className="signup-container">
+        <div className="signup-container" style={{fontFamily:'Nunito'}}>
             <form onSubmit={handleSignup} className="signup-form">
                 <h2>Create your Account</h2>
                 <label>
-                    <span>Name</span>
                     <input
                         type="text"
                         placeholder="Your Fullname"

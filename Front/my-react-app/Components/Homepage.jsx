@@ -93,7 +93,7 @@ const Homepage = () => {
           <img src="https://ambraee.com/cdn/shop/files/Add_a_little_bit_of_body_text_20240704_191123_0000.jpg?v=1720141640&width=1920" alt="Banner 2" />
           </Link>
         </div>
-        <div>
+        <div>  
         <Link to='/womenwestern' >
       
           <img src="https://ambraee.com/cdn/shop/files/Be_Date_Banner_Desktop_copy_29615a0c-44be-4792-8441-77e93d77a62e.webp?v=1720272763&width=1920" alt="Banner 3" />
@@ -143,10 +143,11 @@ const Homepage = () => {
 
       
       <Card3 category={category1}/>
-        
+        <hr />
 
       <div className="price-section">
-        <h2>Shop by Price</h2>
+        <h2>SHOP BY PRICE</h2>
+       
         <div className="price-categories">
           {priceCategories.map((priceCategory) => (
             <div key={priceCategory.name} className="price-category">
@@ -162,6 +163,7 @@ const Homepage = () => {
         <Link to='/saree' style={{ textDecoration: 'none' }}>
   <button id='allbutton'>View all</button>
 </Link>
+<hr />
 
       </div>
 
@@ -182,9 +184,10 @@ const Homepage = () => {
       
       <Card3 category={category2}/>
          
+         <hr />
 
 
-      <div>
+      <div style={{marginTop:'50px'}}>
       <Link to='/saree'>
         <img src="https://kalamandir.com/media/fbfeed/Banarasi.jpg" alt="" />
       
@@ -242,12 +245,14 @@ const Homepage = () => {
 
 
 
+
 <div className='sareees'>
 <Link to='/saree'>
     <img src="https://sudathi.com/cdn/shop/files/Premium-Sarees-banner-compressed_1.jpg?v=1714109607&width=2000" alt="" />
 </Link>
 </div>
 
+<hr />
       <div className="icon-blocks">
   
         <div className="icon-block">
@@ -255,7 +260,7 @@ const Homepage = () => {
           <h3>Secure payment</h3>
         </div>
         
-        
+          
         <div className="icon-block">
           <img src="//ambraee.com/cdn/shop/files/made_in_india.png?v=1709894104" alt="Made In India" />
           <h3>Made In India</h3>

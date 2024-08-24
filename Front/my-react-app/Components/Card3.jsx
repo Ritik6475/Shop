@@ -12,7 +12,7 @@ const Card3 = ({ category }) => {
             try {
                 const response = await axiosInstance.post('/products/category', { category });
                 const allProducts = response.data;
-                const latestProducts = allProducts.slice(-12).reverse(); // Get the last 10 products and reverse them to show the most recent first
+                const latestProducts = allProducts.slice(-15).reverse(); // Get the last 10 products and reverse them to show the most recent first
                 setLatestProducts(latestProducts);
             } catch (error) {
                 console.error('Error fetching products by category:', error);

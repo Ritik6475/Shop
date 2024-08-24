@@ -1,14 +1,14 @@
 .card3-kards {
     display: flex;
     flex-wrap: wrap;
-    gap: 1px;
+    gap: 10px; /* Adjust gap as needed */
     font-family: 'Nunito', sans-serif;
 }
 
 .card3-product-card {
     padding: 10px;
     border-radius: 10px;
-    width: calc(25% - 3px); /* Set the card width to 25% to show 4 products in a row with 3px gap */
+    width: calc(20% - 10px); /* Set the card width to 20% to show 5 products in a row with 10px gap */
     overflow: hidden;
     position: relative;
 }
@@ -20,14 +20,11 @@
     justify-content: center;
     align-items: center;
     position: relative;
-
 }
 
 .card3-product-image img {
-
     width: 100%;
     height: 100%; /* Ensure all images have the same size */
-
 }
 
 .card3-quick-view {
@@ -41,13 +38,12 @@
     border: none;   
     padding: 10px 20px;
     border-radius: 5px;
-    
     cursor: pointer;
     opacity: 0;
 }
 
 .card3-product-card:hover .card3-quick-view {
-    opacity: 10;
+    opacity: 1; /* Ensure the button appears on hover */
 }
 
 .card3-product-details {
@@ -88,7 +84,6 @@
 .card3-product-discount {
     font-size: 18px;
     color: rgba(128, 0, 0, 0.544);
-    
 }
 
 .card3-product-rating .card3-star {

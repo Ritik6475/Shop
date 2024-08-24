@@ -273,17 +273,16 @@ const Selectproductpage = ({ userId, isLoggedIn }) => {
                                 <h3 onClick={toggleAdditionalInfo} className="collapsible-header" style={{ marginLeft: '140px' }}>ADDITIONAL INFORMATION</h3>
                                 {showAdditionalInfo && (
                                     <div className="collapsible-content">
-                                        <p>Net Quantity: 1 N</p>
                                         <p>
                                             Manufactured By:
                                             <br />
-                                            AMBRAEE ENTERPRISES
+                                            SHREE ATTIRES ENTERPRISES
                                             <br />
                                             B-8, KARTARPURA INDUSTRIAL AREA,
                                             <br />
                                             22 GODOWN
                                             <br />
-                                            JAIPUR-302006 (RAJASTHAN)
+                                            Patnipura-452003 (Madhya pradesh)
                                             <br />
                                             GST NO.: 08ABYFA7653G1ZT
                                         </p>
@@ -291,16 +290,16 @@ const Selectproductpage = ({ userId, isLoggedIn }) => {
                                         <p>
                                             Customer Care Address:
                                             <br />
-                                            Ambraee by Palak Agrawal
+                                            Shree Attires by Rohit Sharma
                                             <br />
-                                            B-8, Kartarpura Industrial Area, Sharma Colony, 22 Godam, Jaipur – 302006
+                                            B-8, Patnipura, Sharma Colony, 22 Godam, Indore – 452003
                                             <br />
-                                            Email: support@ambraee.com
+                                            Email: rathodritik259@gmail.com
                                             <br />
-                                            Phone: +91-9571710032, +91-9828733355
+                                            Phone: +91-8435541370, +91-7693843988
                                         </p>
                                     </div>
-                                )}
+                                )}  
                             </div>
                         </div>
                     </div>
@@ -520,10 +519,14 @@ const Selectproductpage = ({ userId, isLoggedIn }) => {
             </div>
             <br />
             <hr />
-            <div className='similarcards'>
-                <h1 className='similarheading'>Similar products</h1>
+            <div className='similarcards' style={{marginTop:'20px',fontFamily:'Gill'}}>
+
+                <h2 className='similarheading'>Similar products</h2>
+                
                 <br /><br />
+                <div style={{marginTop:'-120px'}}>
                 <Card2 category={category} isLoggedIn={isLoggedIn} userId={userId} />
+                </div>
             </div>
             <Footer />
         </>

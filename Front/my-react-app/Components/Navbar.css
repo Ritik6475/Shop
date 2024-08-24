@@ -106,6 +106,7 @@ body {
   border-radius: 50%;
   margin-top: 15px;
   margin-left: 20px;
+
 }
 
 .search {
@@ -277,3 +278,168 @@ body {
   margin-top: -15px;
   margin-left: -1px;
 }
+
+
+/* Navbar Styles */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1100;
+}
+
+/* Logo Styles */
+.logo img {
+  height: 90px; /* Adjust height as needed */
+  width: 120px;
+margin-top: 20px;
+  max-width: 150%; /* Ensures logo scales down on smaller screens */
+margin-left: 310px;
+cursor: pointer;
+
+}
+
+/* Search Bar Styles */
+.search {
+  display: flex;
+  align-items: center;
+  flex: 2;
+  max-width: 400px; /* Adjust max-width as needed */
+  position: relative;
+}
+
+.input {
+  flex: 1;
+  height: 45px; /* Adjust height as needed */
+  border-radius: 10px; /* Rounded corners */
+  padding-left: 15px;
+  font-size: 14px;
+  background-color: #F3F3F3;
+}
+
+.input::placeholder {  
+  color: rgba(0, 0, 0, 0.671);
+} 
+
+.searchicon {
+  position: absolute;
+  right: 10px;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .logo img {
+      height: 40px; /* Adjust for smaller screens */
+  }
+
+  .input {
+      height: 35px; /* Adjust for smaller screens */
+      font-size: 12px;
+  }
+
+  .searchicon {
+      right: 5px;
+  }
+}
+
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #fff;
+}
+
+.navbar-logo {
+  max-width: 150px;
+}
+
+.navbar-search {
+  flex: 1;
+  margin: 0 1rem;
+}
+
+.search-bar {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-links a {
+  margin-left: 1rem;
+  text-decoration: none;
+  color: #333;
+}
+
+.navbar-links a:hover {
+  color: #007BFF;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
+  }
+
+  .navbar-logo {
+    max-width: 120px;
+  }
+
+  .navbar-search {
+    flex: 1;
+    order: 2;
+    margin: 1rem 0;
+  }
+
+  .navbar-links {
+    order: 3;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+/* Further adjustment for smaller screens */
+@media screen and (max-width: 576px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar-logo {
+    max-width: 100px;
+    margin-bottom: 1rem;
+  }
+
+  .navbar-search {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .navbar-links {
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  .navbar-links a {
+    margin: 0 0.5rem;
+  }
+}
+
+
+

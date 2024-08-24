@@ -10,7 +10,10 @@ import axiosInstance from '@axios';
 const Cartpage = ({ userId,isLoggedIn }) => {
               const [refreshTrigger, setRefreshTrigger] = useState(false);
               const [CartCount, setCartCount] = useState(0); // State to hold the cart count
-    
+              const [couponCodes, setCouponCodes] = useState({}); // Temporary state to hold coupon codes for each product
+
+
+
               const [cart, setCart] = useState([]);
               const [totalPrice, setTotalPrice] = useState(0);
               const [totalItems, setTotalItems] = useState(0);
@@ -134,12 +137,24 @@ const Cartpage = ({ userId,isLoggedIn }) => {
                 setDeliveryFee(fee);
               };
 
-              const applyCouponForProduct = (productId) => {
+              
+              const handleCouponChange = (productId, size, color, couponCodeValue) => {
+                const uniqueKey = `${productId}-${size}-${color}`;
+                setCouponCodes(prevCodes => ({
+                  ...prevCodes,
+                  [uniqueKey]: couponCodeValue
+                }));
+              };
+              
+              
+              const applyCouponForProduct = (productId, size, color) => {
                 const updatedCart = cart.map(product => {
-                  if (product._id === productId) {
-                    if (product.productCouponCode === 'PROMO2024') {
+                  if (product._id === productId && product.size === size && product.color === color) {
+                    const enteredCouponCode = couponCodes[`${productId}-${size}-${color}`]; // Unique key based on productId, size, and color
+              
+                    if (enteredCouponCode === 'PROMO2024') {
                       if (!product.buyNowDiscountedPrice) {
-                        product.buyNowDiscountedPrice = product.new_price * 0.9 * product.quantity;
+                        product.buyNowDiscountedPrice = product.new_price * 0.9; // Apply 10% discount
                         alert('Coupon applied! You have received a 10% discount on this product.');
                       } else {
                         alert('Coupon already applied for this product.');
@@ -150,9 +165,11 @@ const Cartpage = ({ userId,isLoggedIn }) => {
                   }
                   return product;
                 });
+              
                 setCart(updatedCart);
-                calculateTotals(updatedCart);
+                calculateTotals(updatedCart); // Recalculate totals after applying coupon
               };
+              
 
               const applyCouponForBundle = () => {
                 if (couponCode === 'PROMO2024') {
@@ -332,13 +349,15 @@ const Cartpage = ({ userId,isLoggedIn }) => {
 
                           </div>
 
-
-                          <div className='grid-item product-total'>
-                            <p>₹{(product.new_price * product.quantity).toFixed(2)}</p>
-                            {product.productCouponCode === 'PROMO2024' && (
-                              <p className="discounted-price">Discounted Price: ₹{(product.buyNowDiscountedPrice || (product.new_price * 0.9) * product.quantity).toFixed(2)}</p>
-                            )}
-                          </div>
+                          <div className="grid-item product-total">
+                <p>₹{(product.new_price * product.quantity).toFixed(2)}</p>
+                {product.buyNowDiscountedPrice && (
+                  <p className="discounted-price">
+                    Discounted Price: ₹{(product.buyNowDiscountedPrice * product.quantity).toFixed(2)}
+                  </p>
+                )}
+              </div>
+                          
                           <div className='grid-item product-details' style={{marginLeft:'40px',width:'100%'}}>
                             <p> Color: <span className="color-dot" style={{ backgroundColor: product.color }}></span>{product.color}</p>
                             <p>Size: {product.size}</p>
@@ -346,29 +365,25 @@ const Cartpage = ({ userId,isLoggedIn }) => {
                             <p>{product.available ? <span className='instock'>In Stock</span> : <span className='outofstock'>Out of Stock</span>}</p>
                           </div>
 
-                          <div className="apply-coupon">
-                            <div className="coupon-header">
-                              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4agzRrxFUfsJ6g4NqLOlLidwjG8ZJ-HKL8Q&s" alt="Coupon Icon" className="coupon-icon" />
-                            </div>
-                            <div className="coupon-input">
-                              <input 
-                                type="text" 
-                                placeholder="Enter Coupon/Gift Code" 
-                                className="coupon-code-input" 
-                                value={product.productCouponCode}
-                                onChange={(e) => {
-                                  const updatedCart = cart.map(p => 
-                                    p._id === product._id ? { ...p, productCouponCode: e.target.value } : p
-                                  );
-                                  setCart(updatedCart);
-                                }}
-                                
-                              />
-                              <button className="apply-coupon-button" onClick={() => applyCouponForProduct(product._id)}>APPLY</button>
 
-                            </div>
-                          </div>
-                          
+                          <div className="apply-coupon">
+  <div className="coupon-header">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4agzRrxFUfsJ6g4NqLOlLidwjG8ZJ-HKL8Q&s" alt="Coupon Icon" className="coupon-icon" />
+  </div>
+  <div className="coupon-input">
+    <input
+      type="text"
+      placeholder="Enter Coupon/Gift Code"
+      className="coupon-code-input"
+      value={couponCodes[`${product._id}-${product.size}-${product.color}`] || ''}
+      onChange={(e) => handleCouponChange(product._id, product.size, product.color, e.target.value)}
+    />
+    <button  className="apply-coupon-button" style={{padding:'5px'}} onClick={() => applyCouponForProduct(product._id, product.size, product.color)}>
+      Apply
+    </button>
+  </div>
+</div>
+
 
                           <button className='remove-button' onClick={() => removeFromCart(product._id)} >
                             <img src="https://static1.hkrtcdn.com/mbnext/static/media/icons/delete-new.svg" alt="" />
