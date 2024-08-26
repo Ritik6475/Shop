@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Card3.css';
 import { Link } from 'react-router-dom';
-import axiosInstance from '@axios';
+import axiosInstance from '@axios';  
 
 const Card3 = ({ category }) => {
     const [latestProducts, setLatestProducts] = useState([]);
@@ -56,7 +56,7 @@ const Card3 = ({ category }) => {
                         <div className="card3-product-image">
                             {/* <img src={`./api${product.image}`} alt={product.productname} /> */}
 
-                            <img src={`${import.meta.env.VITE_API_BASE_URL}${product.image}`} alt={product.productname} />
+                            <img src={`${import.meta.env.VITE_API_BASE_URL}${product.image}`} alt={product.brandname} />
 
                             <button className="card3-quick-view">Checkout Product</button>
                         </div>

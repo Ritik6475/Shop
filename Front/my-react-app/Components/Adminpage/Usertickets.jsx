@@ -11,7 +11,7 @@ const Usertickets = () => {
   const [responseText, setResponseText] = useState('');
   const [status, setStatus] = useState('');
   const [selectedOrderId, setSelectedOrderId] = useState(null);
-
+  
   useEffect(() => {
     const fetchTickets = async () => {
       try {
@@ -57,7 +57,10 @@ const Usertickets = () => {
   return (
 
     <div className='user-tickets'>
-            <Adminpage />
+              
+            
+<div style={{marginLeft:'-30px',marginTop:'10px'}}> <Adminpage />
+          </div>
 
       <h1 className='tickets-heading'>User Tickets</h1>
       {loading && <div className='loading'>Loading...</div>}

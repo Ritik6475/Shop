@@ -360,6 +360,7 @@ const Cartpage = ({ userId,isLoggedIn }) => {
                           
                           <div className='grid-item product-details' style={{marginLeft:'40px',width:'100%'}}>
                             <p> Color: <span className="color-dot" style={{ backgroundColor: product.color }}></span>{product.color}</p>
+                            
                             <p>Size: {product.size}</p>
                           
                             <p>{product.available ? <span className='instock'>In Stock</span> : <span className='outofstock'>Out of Stock</span>}</p>
@@ -385,7 +386,7 @@ const Cartpage = ({ userId,isLoggedIn }) => {
 </div>
 
 
-                          <button className='remove-button' onClick={() => removeFromCart(product._id)} >
+                            <button className='remove-button' onClick={() => removeFromCart(product._id)} >
                             <img src="https://static1.hkrtcdn.com/mbnext/static/media/icons/delete-new.svg" alt="" />
                           
                             <span>Delete</span>

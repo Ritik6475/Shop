@@ -1,6 +1,7 @@
 
 //Necessary imports
 
+
 import express from "express";
 import cors from 'cors'; 
 import bcrypt from 'bcryptjs';
@@ -29,7 +30,7 @@ mongoose.connect("mongodb+srv://rathodritik259:1Q2w3e4r5t@cluster123.hmrpy.mongo
 
 // CORS configuration
 
-// app.use(cors());
+// app.use(cors());  
 
 const corsOptions = {
   origin: 'https://shreejee-attires.web.app',  // Your frontend domain
@@ -97,6 +98,7 @@ let isLoggedIn = false;
 
 //name,email,password,number,cart,all order
 
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -106,11 +108,14 @@ const __dirname = path.dirname(__filename);
   // app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // Serve images with a more open CORS policy
+
 app.use('/uploads', (req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', 'https://shreejee-attires.web.app');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   next();
 }, express.static(path.join(__dirname, 'uploads')));
+
+
 
 
 app.get('/',(req,res)=>{
@@ -121,30 +126,63 @@ app.get('/',(req,res)=>{
 //////////////////////////////////////////////////////////////////////////////////
 
 app.post('/newsletterSubscribe', async (req, res) => {
-    const { whatsappNumber } = req.body;
-    try {
+  const { whatsappNumber } = req.body;
+  try {
+    // Check if the number is already subscribed
+    const existingSubscriber = await NewsletterSubscriber.findOne({ whatsappNumber });
+
+    if (existingSubscriber) {
+      if (existingSubscriber.addedToGroup === 'yes') {
+        // If already added to the group
+        res.status(200).json({ message: 'You are already added to the group' });
+      } else {
+        // If not yet added to the group
+        res.status(200).json({ message: 'You will be added to the group shortly' });
+      }
+    } else {
+      // If not subscribed yet, add new subscriber
       const newSubscriber = new NewsletterSubscriber({ whatsappNumber });
       await newSubscriber.save();
-      res.status(201).json({ message: 'Subscribed successfully' });
-    } catch (error) {
-      console.error('Error subscribing to newsletter:', error);
-      res.status(500).json({ message: 'Error subscribing to newsletter' });
+      res.status(201).json({ message: 'Subscribed successfully, you will be added to the group shortly' });
     }
-  });
+  } catch (error) {
+    console.error('Error subscribing to newsletter:', error);
+    res.status(500).json({ message: 'Error subscribing to newsletter' });
+  }
+});
   
 
+// Endpoint to get all subscribers
+app.get('/getSubscribers', async (req, res) => {
+  try {
+    const subscribers = await NewsletterSubscriber.find();
+    res.status(200).json(subscribers);
+  } catch (error) {
+    console.error('Error fetching subscribers:', error);
+    res.status(500).json({ message: 'Error fetching subscribers' });
+  }
+});
 
-  // GET route to fetch all subscribers
-  app.get('/getNewsletterSubscribers', async (req, res) => {
-    try {
-      const subscribers = await NewsletterSubscriber.find();
-      res.json({ subscribers });
-    } catch (error) {
-      console.error('Error fetching newsletter subscribers:', error);
-      res.status(500).json({ message: 'Error fetching newsletter subscribers' });
+// Endpoint to update the addedToGroup status
+app.post('/updateSubscriberStatus', async (req, res) => {
+  const { whatsappNumber, addedToGroup } = req.body;
+  try {
+    const subscriber = await NewsletterSubscriber.findOneAndUpdate(
+      { whatsappNumber },
+      { addedToGroup },
+      { new: true }
+    );
+    if (subscriber) {
+      res.status(200).json({ message: 'Subscriber status updated successfully' });
+    } else {
+      res.status(404).json({ message: 'Subscriber not found' });
     }
-  });
-  
+  } catch (error) {
+    console.error('Error updating subscriber status:', error);
+    res.status(500).json({ message: 'Error updating subscriber status' });
+  }
+});
+
 
 
   app.post('/Signup', async (req, res) => {
@@ -255,6 +293,8 @@ app.post('/login', async (req, res) => {
     })
     
     
+
+
     app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
       
@@ -362,7 +402,7 @@ app.post('/login', async (req, res) => {
 // Update a product// Update a product
 
 app.put('/updateproducts/:id', async (req, res) => {
-    try {
+    try {  
         const { id } = req.params; // This will be the product's id
         const updatedProduct = await Product.findOneAndUpdate({ id: parseInt(id) }, req.body, { new: true });
         
@@ -376,6 +416,8 @@ app.put('/updateproducts/:id', async (req, res) => {
         res.status(500).json({ message: 'Error updating product', error });
     }
 });
+
+
 
 
 // Delete a product

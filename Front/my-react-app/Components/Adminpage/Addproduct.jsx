@@ -15,7 +15,7 @@ const Addproduct = () => {
     imagethree: null,
     imagefour: null,
     imagefive: null,
-    imagesix: null,
+    imagesix: null,  
     imageseven: null,
     imageeight: null,
     category: '',
@@ -157,7 +157,11 @@ const Addproduct = () => {
 
   return (
     <div className='add-product-page'>
-      <Adminpage />
+     
+     
+<div style={{marginLeft:'-30px',marginTop:'-50px'}}> <Adminpage />
+          </div>
+
       <div className='form-container'>
         <h2>Create New Product</h2>
         <form onSubmit={handleSubmit}>
@@ -190,6 +194,8 @@ const Addproduct = () => {
 
           <div>
             <h3>Colors</h3>
+            
+            <p style={{marginTop:'20px', marginBottom:'20px', fontFamily:'Nunito'}}>Visit this link if trouble in finding color codes --><span style={{color:'#3090C7'}}>  https://www.computerhope.com/htmcolor.htm</span></p>
             <input
               type="text"
               value={colorInput}

@@ -39,7 +39,10 @@ const Allproducts = () => {
 
     return (
         <div className="allproducts-container">
-            <Adminpage />
+
+<div style={{marginLeft:'-30px',marginTop:'-50px'}}> <Adminpage />
+          </div>
+  
             <h1>All Products</h1>
             <div className="products-list">
                 {products.map(product => (

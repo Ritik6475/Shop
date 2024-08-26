@@ -173,8 +173,10 @@ const userSchema = new mongoose.Schema({
 
 
   const newsletterSubscriberSchema = new mongoose.Schema({
-    whatsappNumber: { type: String ,required: true},
-    dateSubscribed: { type: Date, default: Date.now }
+  
+    whatsappNumber: { type: String, required: true },
+  dateSubscribed: { type: Date, default: Date.now },
+  addedToGroup: { type: String, enum: ['yes', 'no'], default: 'no' } // Added field for tracking group status
 
   });
   

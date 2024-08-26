@@ -195,6 +195,7 @@
 .select-product-colors {
     display: flex;
     gap: 10px;
+
 }
 
 .select-product-color-option {
@@ -204,6 +205,7 @@
     cursor: pointer;
     transition: background-color 0.3s, border-color 0.3s;
     border: 1px solid #ccc;
+
 }
 
 .select-product-color-option.selected {
@@ -419,17 +421,50 @@
     background-color: maroon;
 }
 
+
 .reviews-container {
-    max-height: 300px;
-    overflow-y: auto;
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px 0;
 }
 
+.reviews-scroll-wrapper {
+    display: flex;
+    align-items: flex-start; /* Align items at the start to fit the image height */
+    position: relative;
+    overflow: hidden;
+    height: auto; /* Adjust the height automatically */
+    
+}
+
+.reviews-wrapper {
+    display: flex;
+    overflow-x: auto;
+    gap: 5px;
+    scroll-behavior: smooth;
+    width: 700px;
+    background-color: black;
+}
 .feedback-item {
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-width: 400px;
+    margin-top: 20px;
+    margin-left: 5px;
+    width: auto;
     border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 2px;
+    background-color: #fff;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    padding: 15px;
     margin-bottom: 20px;
-    background-color: maroon;
+    transition: transform 0.3s ease;
+}
+
+.feedback-item:hover {
+    transform: translateY(-5px);
 }
 
 .feedback-header {
@@ -439,78 +474,93 @@
     margin-bottom: 10px;
 }
 
-.feedback-user-info {
-    display: flex;
-    align-items: center;
-}
-
-.feedback-user-icon {
+.revieweruser {
+    color: #333;
     font-size: 24px;
     margin-right: 10px;
+}
+
+.feedback-user-info {
+    text-align: left;
+    display: flex;
+    align-items: center;
 }
 
 .feedback-user-name {
     font-size: 18px;
     font-weight: bold;
-    color: white;
+    color: #333;
+    margin-left: -100px;
 }
 
-.revieweruser {
-    color: white;
-    margin-left: 10px;
+.rating-stars {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .feedback-content {
     font-size: 16px;
-    color: white;
+    color: #555;
+    margin-top: 10px;
     line-height: 1.5;
+    word-wrap: break-word;
+    white-space: normal;
+    overflow: visible;
 }
 
 .feedback-image {
-    position: relative;
+    text-align: center;
+    margin-top: 10px;
 }
 
-.feedback-image img {
-    max-width: 100%;
-    height: 200px;
-    width: 150px;
-    display: block;
-    transition: transform 0.3s ease;
+.no-reviews {
+    text-align: center;
+    font-size: 16px;
+    color: #888;
 }
 
-.feedback-image img.expanded {
-    height: 400px;
-    width: 800px;
-    transform: scale(2);
+.scroll-button {
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform-origin: center;
-    z-index: 1000;
+    height: 60px;
+    transform: translateY(-50%);
+    font-size: 60px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1;
+    color: #333;
 }
 
-.expanded-image {
-    height: 200px;
-    width: 400px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    margin-top: 230px;
-    margin-left: 800px;
+.scroll-button.left {
+    left: 10px;
 }
 
-.expanded-image img {
-    height: 400px;
-    width: 400px;
-    object-fit: fill;
+.scroll-button.right {
+    right: 10px;
 }
+
+.scroll-button:hover {
+    color: #000;
+}
+
+.reviews-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+/* Ensure content fits properly and expands dynamically */
+.feedback-item, .feedback-header, .feedback-content, .feedback-thumbnail {
+    box-sizing: border-box;
+}
+
+.feedback-item {
+    height: auto; /* Ensure feedback item adapts to content */
+    width: auto;
+}
+
+
+
 
 .similarheading{
     margin-left: 650px;
@@ -666,3 +716,46 @@
   }
   
   
+  .select-product-colors {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.color-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-width: 50px;
+    max-width: 80px; /* Max width increased to allow for longer color names */
+    word-wrap: break-word; /* Ensures longer names wrap to the next line */
+}
+
+.select-product-color-option {
+    width: 40px;
+    height: 40px;
+    border-radius: 10%;
+    border: 2px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.color-name {
+    margin-top: 5px;
+    font-size: 12px;
+    white-space: normal; /* Allows text to wrap */
+    word-break: break-word; /* Breaks long words */
+    text-align: center;
+}
+
+.selected {
+    border: 2px solid #ff6f00; /* Highlighted border for selected color */
+}
+
+.color-label {
+    font-size: 10px;
+    color: #333;
+    text-align: center;
+}

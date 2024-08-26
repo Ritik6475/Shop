@@ -11,7 +11,7 @@ const Selectproductpage = ({ userId, isLoggedIn }) => {
     const location = useLocation();
     const { product } = location.state || {};
     const navigate = useNavigate();
-
+  
 
     const category = "Saree";
 
@@ -57,39 +57,48 @@ const Selectproductpage = ({ userId, isLoggedIn }) => {
         }
     }, [refreshTrigger]);
 
-    const addToCart = async () => {
+
+    const scrollLeft = () => {
+        document.querySelector('.reviews-wrapper').scrollBy({ left: -400, behavior: 'smooth' });
+      };
+      
+      const scrollRight = () => {
+        document.querySelector('.reviews-wrapper').scrollBy({ left: 400, behavior: 'smooth' });
+      };
+
+      const addToCart = async () => {
         if (!isLoggedIn) {
             alert('Please log in to add items to your cart.');
             return;
         }
     
-        if (!selectedSize || !selectedColor) {
+        // Allow bypassing color selection if "As per the image" is selected
+        if (!selectedSize || (selectedColor !== "As per the image" && !selectedColor)) {
             alert('Please select a size and color.');
             return;
         }
     
         try {
+            // Handle the case where "As per the image" is selected as the color
+            const colorToUse = selectedColor === "As per the image" ? "As per the image" : selectedColor;
+    
             const response = await axiosInstance.post('/cart', {
                 userId,
                 product,
                 size: selectedSize,
-                color: selectedColor,
+                color: colorToUse,
             });
     
-            // Check if the response contains an error message
             if (response.data.error) {
                 alert(response.data.error);
             } else {
-                // Display success message
-                alert(`${response.data.message}. Please review your delivery address at the top of the cart page, as this will be the address used for product delivery.`);
-                
-                // Trigger cart refresh
-                setRefreshTrigger(true);
+                alert(`${response.data.message}. Please review your delivery address at the top of the cart page.`);
+                setRefreshTrigger(true); // Trigger cart refresh
             }
     
         } catch (error) {
             console.error('Error adding to cart:', error);
-            alert('Same product is already there in the cart');
+            alert('Same product is already there in the cart.');
         }
     };
     
@@ -198,7 +207,7 @@ const Selectproductpage = ({ userId, isLoggedIn }) => {
                                     <img
     key={index}
     src={`${import.meta.env.VITE_API_BASE_URL}${product[key]}`}
-    alt={`${product.brandname} - ${product.productname}`}
+    alt={`image not found`}
     className={`thumbnail ${expandedImage === key ? 'active' : ''}`}
     onClick={() => setExpandedImage(key)}
 />
@@ -219,7 +228,7 @@ const Selectproductpage = ({ userId, isLoggedIn }) => {
                            
                             <img
                             src={`${import.meta.env.VITE_API_BASE_URL}${product[expandedImage]}`}
-                            alt={`${product.brandname} - ${product.productname}`}
+                            alt={`${product.brandname} - ${product.brandname}`}
                             className='selected-image'
                         />
                         
@@ -236,7 +245,7 @@ const Selectproductpage = ({ userId, isLoggedIn }) => {
                                                 <div key={index} className='spec-item'>
                                                     <div className='spec-key'>{spec.key}</div>
                                                     <div className='spec-value'>{spec.value}</div>
-                                                </div>
+                                                 </div>
                                             ))}
                                         </div>
                                     </div>
@@ -342,25 +351,62 @@ const Selectproductpage = ({ userId, isLoggedIn }) => {
                         </div>
                         <br />
                         <hr />
+                          
+                       
                         <div className='select-product-color'>
-                            <h3>Select Color:</h3>
-                            <div className='select-product-colors'>
-                                {product.colors?.map((color, index) => (
-                                    <div
-                                        key={index}
-                                        className={`select-product-color-option ${selectedColor === color ? 'selected' : ''}`}
-                                        style={{ backgroundColor: color }}
-                                        onClick={() => setSelectedColor(color)}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-                        <br />
-                        <hr />
-                        <br />  
+    <h3>Select Color:</h3>
+    <div className='select-product-colors'>
+        {product.colors?.map((color, index) => (
+            <div key={index} className='color-container'>
+                {color !== "As per the image" ? (
+                    <>
+                        <div
+                            className={`select-product-color-option ${selectedColor === color ? 'selected' : ''}`}
+                            style={{ backgroundColor: color }}
+                            onClick={() => setSelectedColor(color)}
+                        />
+                        <span className="color-name">{color}</span>
+                    </>
+                ) : (
+                    <div
+                        className={`select-product-color-option ${selectedColor === color ? 'selected' : ''}`}
+                        onClick={() => setSelectedColor("As per the image")}
+                        style={{ backgroundColor: 'transparent' }}
+                    >
+                        <span className="color-label">As per the image</span>
+                    </div>
+                )}
+            </div>
+        ))}
+    </div>
+</div>
+<hr  style={{marginTop:'10px'}} />
 
 
-                        <div className='product-stock-status'>
+
+<button
+    onClick={() => {
+        if (product.colors.includes("As per the image") || selectedColor) {
+            handleAddToCart();  // Allow adding to cart without color selection if "As per the image" is present
+        } else {
+            alert("Please select a color");
+        }
+    }}
+>
+    Add to Cart
+</button>
+
+    
+    
+    
+
+
+
+                          
+                          <br />
+                    
+
+                        <div className='product-stock-status' style={{marginTop:'-40px'}}>
                             {product?.available ? (
                           <div className='instock' style={{fontSize:'18px',fontWeight:400,color:'Green'}}>In Stock</div>
                            ) : (
@@ -472,44 +518,46 @@ const Selectproductpage = ({ userId, isLoggedIn }) => {
                                 {showReviews ? 'Hide Reviews' : 'Show Reviews'}
                             </button>
                             {showReviews && (
-                                <div className='reviews-container'>
-                                    {feedbacksWithRatings.length > 0 ? (
-                                        feedbacksWithRatings.map((feedback, index) => (
-                                            <div key={index} className='feedback-item'>
-                                                <div className='feedback-header'>
-                                                    <div className='rating-stars'>
-                                                        {renderStars(feedback.rating)}
-                                                     
-                                                    </div>
-                                                    <div className='feedback-user-info'>
-                                                        <FaUser className="revieweruser" />
-                                                        <div className='feedback-user-name'>{feedback.name}</div>
-                                                    </div>
-                                                </div>
-                                                <div className='feedback-content'>
-                                                    {feedback.content}
-                                                    {feedback.image && (
-                                                        <div className='feedback-image'>
-                                                       
-                                                            {/* <img
-                                                                src={`/api/${feedback.image}`}
-                                                                alt="feedback"
-                                                            /> */}
-                                                       
-                                                       <img src={`${import.meta.env.VITE_API_BASE_URL}${feedback.image}`}
-    alt="feedback"
-/>
-
-                                                       
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        ))
-                                    ) : (
-                                        <p style={{ marginLeft: '225px' }}>Buy this, and be the first to write a review</p>
-                                    )}
+                            
+                            <div className='reviews-container'>
+                            {feedbacksWithRatings.length > 0 ? (
+                              <div className="reviews-scroll-wrapper">
+                                <button className="scroll-button left" onClick={scrollLeft}>‹</button>
+                                <div className="reviews-wrapper">
+                                  {feedbacksWithRatings.map((feedback, index) => (
+                                    <div key={index} className='feedback-item'>
+                                      <div className='feedback-header'>
+                                        <FaUser className="revieweruser" />
+                                        <div className='feedback-user-info'>
+                                          <div className='feedback-user-name'>{feedback.name}</div>
+                                        </div>
+                                        <div className='rating-stars'>
+                                          {renderStars(feedback.rating)}
+                                        </div>
+                                      </div>
+                                      <div className='feedback-content'>
+                                        <p>{feedback.content}</p>
+                                        {feedback.image && (
+                                          <div className='feedback-image'>
+                                            <img 
+                                              src={`${import.meta.env.VITE_API_BASE_URL}${feedback.image}`} 
+                                              alt="feedback"
+                                              className="feedback-thumbnail"
+                                            />
+                                          </div>
+                                        )}
+                                      </div>
+                                    </div>
+                                  ))}
                                 </div>
+                                <button className="scroll-button right" onClick={scrollRight}>›</button>
+                              </div>
+                            ) : (
+                              <p className="no-reviews">Be the first to review this product!</p>
+                            )}
+                          </div>
+                          
+
                             )}
                         </div>
                         <br />

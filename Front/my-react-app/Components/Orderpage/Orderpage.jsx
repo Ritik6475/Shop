@@ -469,7 +469,7 @@ const Orderpage = ({ userId }) => {
               </p>
             </div>
             
-          </div>
+          </div>  
 
           <div className='flipkart-order-products' style={{ marginTop: '40px' }}>
             {bundle.products.map(product => (

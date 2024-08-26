@@ -410,7 +410,7 @@ width: 1400px;
   align-items: center;
   justify-content: center;
 }
-
+  
 .newsletter-input input {
   padding: 10px;
   font-size: 16px;
@@ -418,7 +418,8 @@ width: 1400px;
   border-radius: 5px 0 0 5px;
   width: 300px;
   height: 49px;
-  font-family:monospace
+  font-family: 'Nunito', sans-serif;
+
 
 }
 

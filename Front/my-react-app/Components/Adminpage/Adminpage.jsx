@@ -21,6 +21,9 @@ const Adminpage = () => {
         <Link to='/usertickets'>
           <button >User tickets</button>
         </Link >
+        <Link to='/newsletter'>
+          <button >Newsletter</button>
+        </Link >
 
       
          

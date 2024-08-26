@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './EditProduct.css';
 import axiosInstance from '@axios';
+import Adminpage from './Adminpage/Adminpage';
 
 const EditProduct = () => {
     const navigate = useNavigate();
@@ -105,8 +106,12 @@ const EditProduct = () => {
     };
     
     return (
+        
         <div className="edit-product-container">
-            <h1>Edit Product</h1>
+            <div style={{marginLeft:'-100px',marginTop:'-200px'}}> <Adminpage />
+          </div>
+
+            <h1 style={{marginTop:'50px'}}>Edit Product</h1>
             <form onSubmit={handleSubmit} className="edit-product-form">
                 <label>
                     Product Name:
@@ -210,13 +215,16 @@ const EditProduct = () => {
                     </label>
                 ))}
                 <label>
-                    Colors (comma separated):
+                    Colors (comma separated):  
                     <input
                         type="text"
                         name="colors"
                         value={colors.join(', ')}
                         onChange={(e) => setColors(e.target.value.split(',').map(color => color.trim()))}
                     />
+                    
+                    <p style={{marginTop:'20px', marginBottom:'20px', fontFamily:'Nunito'}}>Visit this link if trouble in finding color codes --><span style={{color:'#00008B'}}>  https://www.computerhope.com/htmcolor.htm</span></p>
+         
                 </label>
                 <label>
                     Sizes (comma separated):

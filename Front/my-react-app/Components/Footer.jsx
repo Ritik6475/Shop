@@ -74,7 +74,7 @@ const Footer = ({isAdminAuthorized}) => {
               </div>
             </div>
 
-              
+                
           </div>
         </div>
       </div>

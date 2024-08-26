@@ -12,18 +12,20 @@ import Cartpage from '../Components/Cartpage/Cartpage';
 import Adminpage from '../Components/Adminpage/Adminpage';
 import PasswordPrompt from '../Components/PasswordPrompt'; // Import the PasswordPrompt
 import axiosInstance from '@axios';
+import Newsletter from '../Components/Adminpage/Newsletter';
 
 import Orderpage from '../Components/Orderpage/Orderpage';
 import Addproduct from '../Components/Adminpage/Addproduct';
 import Allproducts from '../Components/Adminpage/Allproducts';
 import Allorders from '../Components/Adminpage/Allorders';
-import Pending from '../Components/Adminpage/Pending';
-import Completed from '../Components/Adminpage/Completed';
+
+
+
+
 import Selectproductpage from '../Components/Selectproductpage';
 import Offerpage from '../Components/Offerpage'; // Ensure this import is correct
 import Paymentgateway from '../Components/Paymentgateway';
 import './App.css';
-import Couponcode from '../Components/Adminpage/Couponcode';
 import SearchPage from '../Components/SearchPage';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
@@ -106,7 +108,6 @@ function App() {
                 <Route path="/cart" element={<Cartpage isLoggedIn={isLoggedIn} username={username} onProfileClick={handleProfileClick} userId={userId} />} />
                 
 
-                <Route path="/couponcode" element={<Couponcode />} />
               
                 <Route path="/search" element={<SearchPage />} />
              
@@ -115,8 +116,8 @@ function App() {
 <Route path="/addproduct" element={isAdminAuthorized ? <Addproduct /> : <PasswordPrompt setIsAuthorized={setIsAdminAuthorized} />} />
 <Route path="/allproduct" element={isAdminAuthorized ? <Allproducts /> : <PasswordPrompt setIsAuthorized={setIsAdminAuthorized} />} />
 <Route path="/allorders" element={isAdminAuthorized ? <Allorders /> : <PasswordPrompt setIsAuthorized={setIsAdminAuthorized} />} />
-<Route path="/pendingorders" element={isAdminAuthorized ? <Pending /> : <PasswordPrompt setIsAuthorized={setIsAdminAuthorized} />} />
-<Route path="/completedorders" element={isAdminAuthorized ? <Completed /> : <PasswordPrompt setIsAuthorized={setIsAdminAuthorized} />} />
+<Route path="/newsletter" element={isAdminAuthorized ? <Newsletter /> : <PasswordPrompt setIsAuthorized={setIsAdminAuthorized} />} />
+
    
 
 

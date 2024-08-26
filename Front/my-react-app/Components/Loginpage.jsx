@@ -1,14 +1,17 @@
-import React, { useState,useEffect } from 'react';  
-// import axios from 'axios';
+import React, { useState, useEffect } from 'react';  
 import Signuppage from './Signuppage';   
 import './Loginpage.css';
-
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import eye icons
 import axiosInstance from '@axios';
 
 const Loginpage = ({ onLoginSuccess, onLogout }) => {
     const [showSignup, setShowSignup] = useState(false);
     const [mobileNumber, setMobileNumber] = useState('');
     const [password, setPassword] = useState('');
+    const [isHoveredL,setIsHoveredL] = useState('false');
+    const [isHoveredS,setIsHoveredS] = useState('false');
+    
+    const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
     const [error, setError] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
 
@@ -80,7 +83,7 @@ const Loginpage = ({ onLoginSuccess, onLogout }) => {
                 </button>
             )}
 
-            <div className="form sign-in" style={{fontFamily:'Nunito'}}>
+            <div className="form sign-in" style={{fontFamily:'Nunito'}} >
                 <h2>Welcome</h2>
                 <form onSubmit={handleLogin}>
                     <label>
@@ -90,28 +93,59 @@ const Loginpage = ({ onLoginSuccess, onLogout }) => {
                             value={mobileNumber}
                             onChange={(e) => setMobileNumber(e.target.value)}
                             required
-                        />
+                      style={{border:'1.5px solid gray' }}
+                      />
+                        
                     </label>
                     <label>
-                        <input
-                            type="password"
-                            placeholder="Your Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
+                        <div className="password-field" style={{ position: 'relative'}}>
+                            <input
+                                type={showPassword ? 'text' : 'password'} // Toggle between text and password
+                                placeholder="Your Password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+
+                                style={{border:'1.5px solid gray' }}
+
+                            />
+                            <span className='iiccoonn'
+
+                                onClick={() => setShowPassword(!showPassword)} // Toggle password visibility
+                                style={{
+                                    position: 'absolute',
+                                    right: '10px',
+                                    top: '63%',
+                                    transform: 'translateY(-50%)',
+                                    cursor: 'pointer',
+                               fontSize:'22px',
+                               color:'black'
+
+                                }}
+                            >
+                                {showPassword ? <FaEye /> : <FaEyeSlash />} {/* Show appropriate icon */}
+                            </span>
+                        </div>
                     </label>
+                  
                     {error && <div className="error-message">{error}</div>}
-                    <button type="submit" className="submit">Login</button>
-
-                         {isLoggedIn && (
                 
-                <button onClick={handleLogout} className="submit">Logout</button>
+                    <button type="submit" className="submit" style={{backgroundColor:'#3090C7',fontWeight:'400',background: isHoveredL ? '#87AFC7' : '#3090C7'}}
                     
-             )}
+                    onMouseEnter={() => setIsHoveredL(true)}
+                    onMouseLeave={() => setIsHoveredL(false)}
+        
+                    >Login</button>
 
+
+                    {isLoggedIn && (
+                        <button onClick={handleLogout} className="submit" style={{backgroundColor:'#E41B17',background: isHoveredS ? '#C83F49' : '#E42217	'}}
+                        onMouseEnter={() => setIsHoveredS(true)}
+                        onMouseLeave={() => setIsHoveredS(false)}
+            
+                        >Logout</button>
+                    )}
                 </form>
-                <p className="forgot-pass">Forgot password?</p>
             </div>
             
             <div className="sub-cont">

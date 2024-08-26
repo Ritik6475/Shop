@@ -26,26 +26,28 @@ const Homepage = () => {
       setWhatsappNumber(e.target.value);
     };
   
+  
+  
     const handleSubmit = async (e) => {
       e.preventDefault();
-  
+    
       if (/^\d{10}$/.test(whatsappNumber)) {
         try {
-          await axiosInstance.post('/newsletterSubscribe', { whatsappNumber });
-          setMessage('Subscribed successfully, you will be added to Whatsapp Group Shortly');
+          const response = await axiosInstance.post('/newsletterSubscribe', { whatsappNumber });
+          setMessage(response.data.message); // Set message from server response
           setWhatsappNumber(''); // Clear input after successful submission
         } catch (error) {
-          console.error('Error subscribing to newsletter:', error.response.data.message);
+          console.error('Error subscribing to newsletter:', error.response?.data?.message || error.message);
           setMessage('Error subscribing to newsletter. Please try again later.');
         }
+        setTimeout(() => {
+          setMessage('');
+        }, 3000);
       } else {
         setMessage('Please enter a valid 10-digit WhatsApp number');
       }
-      setTimeout(() => {
-        setMessage('');
-      }, 3000);
     };
-  
+    
   const bannerSettings = {
     dots: true,
     infinite: true,
@@ -251,7 +253,7 @@ const Homepage = () => {
     <img src="https://sudathi.com/cdn/shop/files/Premium-Sarees-banner-compressed_1.jpg?v=1714109607&width=2000" alt="" />
 </Link>
 </div>
-
+  
 <hr />
       <div className="icon-blocks">
   
@@ -271,8 +273,8 @@ const Homepage = () => {
           <h3>Prompt Customer Service</h3>
         </div>
    
-    </div>
-
+    </div>  
+  
     <div className="newsletter-section">
       <div className="newsletter-text">
         <h2>Newsletter Subscription</h2>
@@ -284,6 +286,7 @@ const Homepage = () => {
           placeholder="ENTER YOUR WhatsApp Number"
           value={whatsappNumber}
           onChange={handleInputChange}
+          style={{ height: '39px', marginTop: '-0px' }}
         />
         <button onClick={handleSubmit}>
           <span>Subscribe</span>
@@ -292,6 +295,11 @@ const Homepage = () => {
       </div>
       {message && <p className="success-message">{message}</p>}
     </div>
+
+
+
+
+
 
     <div class="custom__item-inner custom__item-inner--liquid"><div class="rte">
                 <h2>Unveiling Your Inner Style Icon: Shree - Where Tradition Meets Modernity</h2>
@@ -325,9 +333,3 @@ const Homepage = () => {
 };
 
 export default Homepage;
-
-//https://www.koskii.com/cdn/shop/files/Category_Icons-02_3_360x.png?v=1713519888
-//https://www.koskii.com/cdn/shop/files/Category_Icons-04_2_360x.png?v=1713520005
-//https://www.koskii.com/cdn/shop/files/Category_Icons-03_2_360x.png?v=1713520031
-//https://www.koskii.com/cdn/shop/files/Category_Icons-01_2_360x.png?v=1713520055
-//https://www.koskii.com/cdn/shop/files/Category_Icons-08-16_2_360x.png?v=1713520082

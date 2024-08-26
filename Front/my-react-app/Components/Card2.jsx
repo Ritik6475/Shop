@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Card2.css';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';  
 import Footer from './Footer';
 import ProductFilter from './ProductFilter';  
 import axiosInstance from '@axios';
@@ -143,10 +143,10 @@ const Card2 = ({ category, isLoggedIn, userId }) => {
                     <Link to={`/product`} state={{ product }} style={{ textDecoration: 'none', color: 'inherit' }}>
                         <div className="card2-product-image">
 
+  
+                              <img src={`${import.meta.env.VITE_API_BASE_URL}${product.image.startsWith('/') ? product.image : `/${product.image}`}`} alt={product.brandname} />
 
-                              <img src={`${import.meta.env.VITE_API_BASE_URL}${product.image.startsWith('/') ? product.image : `/${product.image}`}`} alt={product.productname} />
-
-                           
+                             
                  
                  
                         </div>

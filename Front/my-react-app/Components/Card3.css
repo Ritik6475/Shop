@@ -11,10 +11,10 @@
     width: calc(20% - 10px); /* Set the card width to 20% to show 5 products in a row with 10px gap */
     overflow: hidden;
     position: relative;
-}
+}  
 
 .card3-product-image {
-    width: 100%;
+    width: 100%;  
     height: 350px; /* Fixed height for all images */
     display: flex;
     justify-content: center;
