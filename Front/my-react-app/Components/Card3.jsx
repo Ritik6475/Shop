@@ -58,7 +58,7 @@ const Card3 = ({ category }) => {
 
                             <img src={`${import.meta.env.VITE_API_BASE_URL}${product.image}`} alt={product.brandname} />
 
-                            <button className="card3-quick-view">Checkout Product</button>
+                            <button className="card3-quick-view" style={{width:'250px',padding:'5px'}}>Checkout Product</button>
                         </div>
                         <div className="card3-product-details">
                             <h3 className="card3-product-brand">{product.brandname}</h3>

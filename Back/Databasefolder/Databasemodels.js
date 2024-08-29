@@ -63,22 +63,13 @@ const ProductSchema = new mongoose.Schema({
 const Product = mongoose.model('Product', ProductSchema);
 
 
-
-
 const userSchema = new mongoose.Schema({
-  fullname: { type: String, required: true, unique: true, trim: true },
-  contact: { type: Number, required: true, trim: true },
-  otp: { type: String },
-  otpExpiresAt: { type: Date },
+  fullname: { type: String, required: true, trim: true },
+  contact: { type: Number, required: true, unique: true, trim: true },
+  otp: { type: String }, // Ensure this is included
+  otpExpiresAt: { type: Date }, // Ensure this is included
 
-  email: { 
-    type: String, 
-    required: true, 
-    unique: true, 
-    trim: true, 
-    lowercase: true, 
-    match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ 
-  },
+  email: { type: String, required: true, unique: true, trim: true, lowercase: true, match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ },
   password: { type: String, required: true },
   deliveryAddress: {
     addressLine1: { type: String, required: true },
@@ -107,7 +98,7 @@ const userSchema = new mongoose.Schema({
     },
     status: { type: String, enum: ['pending', 'completed', 'cancelled', 'returned'], default: 'pending' },
     date: { type: Date, default: Date.now },
-    statusChangeDate: { type: Date, default: Date.now }, // New field
+    statusChangeDate: { type: Date, default: Date.now },
     returnRequested: { type: Boolean, default: false }
   }],
   bundleOrders: [{
@@ -123,7 +114,7 @@ const userSchema = new mongoose.Schema({
     totalAmount: Number,
     status: { type: String, enum: ['pending', 'completed', 'cancelled', 'returned'], default: 'pending' },
     date: { type: Date, default: Date.now },
-    statusChangeDate: { type: Date, default: Date.now }, // New field
+    statusChangeDate: { type: Date, default: Date.now },
     returnRequested: { type: Boolean, default: false },
     deliveryAddress: {
       addressLine1: String,
@@ -135,6 +126,7 @@ const userSchema = new mongoose.Schema({
     }
   }]
 });
+
 
 
 //product
@@ -180,5 +172,14 @@ const userSchema = new mongoose.Schema({
 
   });
   
+
+  const otpSchema = new mongoose.Schema({
+    email: { type: String, required: true },
+    otp: { type: Number, required: true },
+    createdAt: { type: Date, default: Date.now, expires: '10m' } // Expires after 10 minutes
+  });
+  
+  const OtpModel = mongoose.model('Otp', otpSchema);
+  
   const NewsletterSubscriber = mongoose.model('NewsletterSubscriber', newsletterSubscriberSchema);
-  export { Admin, User, Product, NewsletterSubscriber, Ticket };
+  export { Admin, User, Product, NewsletterSubscriber, Ticket,OtpModel };

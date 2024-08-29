@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { FaUser, FaStar } from 'react-icons/fa';
+import { FaUser, FaStar } from 'react-icons/fa';  
 import './Selectproduct.css';
 import Card2 from './Card2';
+
 import Footer from './Footer';
 import axiosInstance from '@axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Selectproductpage = ({ userId, isLoggedIn }) => {
     const location = useLocation();
@@ -68,18 +72,16 @@ const Selectproductpage = ({ userId, isLoggedIn }) => {
 
       const addToCart = async () => {
         if (!isLoggedIn) {
-            alert('Please log in to add items to your cart.');
+            toast.error('Please log in to add items to your cart.');
             return;
         }
     
-        // Allow bypassing color selection if "As per the image" is selected
         if (!selectedSize || (selectedColor !== "As per the image" && !selectedColor)) {
-            alert('Please select a size and color.');
+            toast.error('Please select a size and color.');
             return;
         }
     
         try {
-            // Handle the case where "As per the image" is selected as the color
             const colorToUse = selectedColor === "As per the image" ? "As per the image" : selectedColor;
     
             const response = await axiosInstance.post('/cart', {
@@ -90,18 +92,23 @@ const Selectproductpage = ({ userId, isLoggedIn }) => {
             });
     
             if (response.data.error) {
-                alert(response.data.error);
+                toast.error(response.data.error);
             } else {
-                alert(`${response.data.message}. Please review your delivery address at the top of the cart page.`);
-                setRefreshTrigger(true); // Trigger cart refresh
+                toast.success(`${response.data.message}. Please review your delivery address at the top of the cart page.`);
+            
+                setTimeout(() => {
+                    setRefreshTrigger(true);
+                  }, 3500);
+              
+
             }
     
         } catch (error) {
             console.error('Error adding to cart:', error);
-            alert('Same product is already there in the cart.');
+            toast.error('Same product is already in the cart.');
         }
     };
-    
+     
 
 
     const getDeliveryDate = () => {
@@ -119,14 +126,15 @@ const Selectproductpage = ({ userId, isLoggedIn }) => {
         return '';
     };
 
+
     const buyNow = async () => {
         if (!isLoggedIn) {
-            alert('Please log in to buy products.');
+            toast.error('Please log in to buy products.');
             return;
         }
     
         if (!selectedSize || !selectedColor) {
-            alert('Please select a size and color.');
+            toast.error('Please select a size and color.');
             return;
         }
     
@@ -137,23 +145,20 @@ const Selectproductpage = ({ userId, isLoggedIn }) => {
                 size: selectedSize,
                 color: selectedColor,
             });
-            
-            alert(response.data.message);
     
-            // Assuming cart count gets updated globally
+            toast.success(response.data.message);
+    
             setRefreshTrigger(true);
     
-            // Navigate to cart page and force a reload
             navigate('/cart');
-            window.location.reload();  // This will force the reload when the cart page is navigated to
+            window.location.reload();
     
         } catch (error) {
             console.error('Error adding product to cart:', error);
-            alert('Failed to add product to cart');
+            toast.error('Failed to add product to cart');
         }
     };
     
-
 
 
 
@@ -187,6 +192,34 @@ const Selectproductpage = ({ userId, isLoggedIn }) => {
     return (
         <>
             <div className='select-product-details-page'>
+          
+            <ToastContainer 
+  position="top-right" 
+  autoClose={3000} 
+  hideProgressBar={false} 
+  newestOnTop={false} 
+  closeOnClick 
+  rtl={false} 
+  pauseOnFocusLoss 
+  draggable 
+  pauseOnHover 
+  theme="dark" 
+  toastStyle={{ 
+    backgroundColor: 'White', 
+    color: 'Black', 
+    fontSize: '16px',
+    borderRadius: '8px',
+    padding: '0px',
+    width:'450px',
+    marginLeft:'-100px',
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
+  }}
+/>
+            
+
+
+
+
                 <div className='select-product-details-container'>
                     <div className='select-product-image-container'>
                         <div className='product-thumbnails'>

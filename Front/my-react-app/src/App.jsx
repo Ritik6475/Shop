@@ -21,7 +21,8 @@ import Allorders from '../Components/Adminpage/Allorders';
 
 
 
-
+import { AlertProvider } from '../AlertContext';
+import GlobalAlert from '../Components/GlobalAlert';
 import Selectproductpage from '../Components/Selectproductpage';
 import Offerpage from '../Components/Offerpage'; // Ensure this import is correct
 import Paymentgateway from '../Components/Paymentgateway';
@@ -92,6 +93,8 @@ function App() {
 
 
     return (
+        <AlertProvider>
+
         <Router>
             <Navbar
                 isLoggedIn={isLoggedIn}
@@ -141,7 +144,10 @@ function App() {
                 <Route path="/salwarsuits" element={<Card2 category="Salwar & Suits" isLoggedIn={isLoggedIn} userId={userId} />} />
                 <Route path="/deliveryaddress" element={<DeliveryAddress userId={userId} />} />
             </Routes>
+            <GlobalAlert/>
         </Router>
+        </AlertProvider>
+
     );
 }
 

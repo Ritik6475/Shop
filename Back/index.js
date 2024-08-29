@@ -16,7 +16,8 @@ import multer from "multer";
 import helmet from 'helmet';
 
 import { fileURLToPath } from 'url';
-import { User, Admin, Product, NewsletterSubscriber, Ticket } from "./Databasefolder/Databasemodels.js";
+import { User, Admin, Product, NewsletterSubscriber, Ticket,OtpModel } from "./Databasefolder/Databasemodels.js";
+
 
 // Initialize dotenv
 dotenv.config();
@@ -41,7 +42,7 @@ const corsOptions = {
 
 // Apply CORS middleware to all routes
 
-app.use(cors(corsOptions));
+ app.use(cors(corsOptions));
 
 // Additional middlewares
 app.use(helmet({
@@ -54,6 +55,7 @@ app.use(bodyParser.urlencoded({ limit: '80mb', extended: true }));
 app.use(express.json());
 
 // Handle preflight (OPTIONS) requests
+
 app.options('*', cors(corsOptions));
 
 // Example route to test
@@ -184,75 +186,46 @@ app.post('/updateSubscriberStatus', async (req, res) => {
 });
 
 
-
-  app.post('/Signup', async (req, res) => {
-    const { fullname, contact, email, password, deliveryAddress } = req.body;
-  
-    try {
-      const userExist = await User.findOne({ $or: [{ email }, { contact }] });
-  
-      if (userExist) {
-        return res.status(400).json({ message: 'User already exists with this email or mobile number' });
-      }
-  
-      const hashedPassword = await bcrypt.hash(password, 10);
-  
-      const newUser = new User({
-        fullname,
-        contact,
-        email,
-        password: hashedPassword,
-        deliveryAddress
-      });
-  
-      await newUser.save();
-  
-      const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
-      res.json({ token });
-    } catch (error) {
-      console.error('Signup failed:', error.message);
-      res.status(500).json({ message: 'Signup failed. Please try again later.' });
-    }
-  });
-  
-// Login route
-app.post('/login', async (req, res) => {
-  const { mobileNumber, password } = req.body;
-  console.log('Mobile Number:', mobileNumber);
-  console.log('Password:', password);
+app.post('/Signup', async (req, res) => {
+  const { fullname, contact, email, password, deliveryAddress } = req.body;
 
   try {
-    const user = await User.findOne({ contact: mobileNumber });
+    const userExist = await User.findOne({ $or: [{ email }, { contact }] });
 
-    // Check if the user exists
-    if (!user) {
-      console.log('User not found');
-      return res.status(404).json({ message: 'User not found', errorType: 'UserNotFound' });
+    if (userExist) {
+      return res.status(400).json({ message: 'User already exists with this email or mobile number' });
     }
 
-    console.log('Stored Hashed Password:', user.password);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Check if the password matches
-    const isMatch = await bcrypt.compare(password, user.password);
-    console.log('Password match status:', isMatch);
+    // Generate OTP and OTP expiration time
+    const otp = Math.floor(100000 + Math.random() * 900000); // Generate a 6-digit OTP
+    const otpExpiresAt = new Date(Date.now() + 15 * 60 * 1000); // OTP expires in 15 minutes
 
-    if (!isMatch) {
-      console.log('Invalid credentials');
-      return res.status(401).json({ message: 'Invalid credentials', errorType: 'InvalidPassword' });
-    }
+    const newUser = new User({
+      fullname,
+      contact,
+      email,
+      password: hashedPassword,
+      deliveryAddress,
+      otp, // Add OTP
+      otpExpiresAt // Add OTP expiration time
+    });
 
-    // Generate the JWT token
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+    await newUser.save();
 
-    console.log('Login processing successful');
-    res.json({ token, username: user.fullname, userId: user._id });
+    const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+    res.json({ token });
   } catch (error) {
-    console.error('Login failed:', error.message);
-
-    // Add more detailed error types here if needed
-    res.status(500).json({ message: 'Login failed. Please try again later.', errorType: error.message });
+    console.error('Signup failed:', error.message);
+    res.status(500).json({ message: 'Signup failed. Please try again later.' });
   }
 });
+
+
+// Login route
+
+
 
     ///////////////////////////////////////////////////////////
 
@@ -1397,63 +1370,6 @@ app.get('/filters', async (req, res) => {
 });
 
 
-const OTP_LENGTH = 6;
-const OTP_EXPIRY_TIME = 10 * 60 * 1000; // 10 minutes
-
-app.post('/send-otp', async (req, res) => {
-  const { mobileNumber } = req.body;
-
-  try {
-    const user = await User.findOne({ contact: mobileNumber });
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    // Generate OTP
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
-
-    // Save OTP to the user's record
-    user.otp = otp;
-    user.otpExpiresAt = Date.now() + OTP_EXPIRY_TIME; // Set OTP expiration time
-    await user.save();
-
-    // Send OTP via SMS (mock implementation)
-    console.log(`Sending OTP ${otp} to mobile number ${mobileNumber}`);
-    // Use an SMS service API here to send the OTP to the user's phone number.
-
-    res.json({ message: 'OTP sent successfully' });
-  } catch (error) {
-    console.error('Failed to send OTP:', error.message);
-    res.status(500).json({ message: 'Failed to send OTP. Please try again later.' });
-  }
-});
-
-
-app.post('/verify-otp', async (req, res) => {
-  const { mobileNumber, otp } = req.body;
-
-  try {
-    const user = await User.findOne({ contact: mobileNumber });
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    // Check if OTP is correct and not expired
-    if (user.otp !== otp || Date.now() > user.otpExpiresAt) {
-      return res.status(401).json({ message: 'Invalid or expired OTP' });
-    }
-
-    // Clear OTP after successful verification
-    user.otp = null;
-    user.otpExpiresAt = null;
-    await user.save();
-
-    res.json({ message: 'OTP verified successfully' });
-  } catch (error) {
-    console.error('Failed to verify OTP:', error.message);
-    res.status(500).json({ message: 'OTP verification failed. Please try again later.' });
-  }
-});
 
 
 
@@ -1475,5 +1391,171 @@ app.post('/reset-password', async (req, res) => {
   } catch (error) {
     console.error('Failed to reset password:', error.message);
     res.status(500).json({ message: 'Password reset failed. Please try again later.' });
+  }
+});
+
+app.post('/checkGroupMembers', async (req, res) => {
+  try {
+    await checkWhatsAppGroupMembers();
+    res.status(200).json({ message: 'Group membership check completed' });
+  } catch (error) {
+    console.error('Error triggering group membership check:', error);
+    res.status(500).json({ message: 'Error triggering group membership check' });
+  }
+});
+
+  
+app.post('/updateSubscribersStatusToNo', async (req, res) => {
+  try {
+    await NewsletterSubscriber.updateMany(
+      { addedToGroup: 'yes' },
+      { addedToGroup: 'no' }
+    );
+    res.status(200).json({ message: 'Subscribers status updated to not in group' });
+  } catch (error) {
+    console.error('Error updating subscribers status to not in group:', error);
+    res.status(500).json({ message: 'Error updating subscribers status' });
+  }
+});
+
+
+
+app.post('/checkGroupMembership', async (req, res) => {
+  try {
+    await checkWhatsAppGroupMembers();
+    res.status(200).json({ message: 'Group membership check started!' });
+  } catch (error) {
+    console.error('Error triggering group membership check:', error);
+    res.status(500).json({ message: 'Error triggering group membership check.' });
+  }
+});
+
+
+
+
+import nodemailer from 'nodemailer';
+import crypto from 'crypto';
+
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail', // Use your preferred email service provider
+  auth: {
+    user: 'rathodritik259@gmail.com', // Replace with your email
+    pass: 'cvci sgtu tcrg ynty'  // Replace with your email password or app-specific password
+  }
+});
+
+transporter.verify(function (error, success) {
+  if (error) {
+     console.log(error);
+  } else {
+     console.log("Server is ready to take our messages");
+  }
+});
+
+
+
+// transporter.sendMail({
+//   from: 'rathodritik259@gmail.com',
+//   to: 'mamtabaibiskoot@gmail.com',
+//   subject: 'Test Email',
+//   text: 'Hello, this is a test email!',
+// }, (err, info) => {
+//   if (err) {
+//      console.log(err);
+//   } else {
+//      console.log("Email sent: " + info.response);
+//   }
+// });
+
+app.post('/requestOtp', async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    // Generate OTP and expiration time
+    const otp = Math.floor(100000 + Math.random() * 900000); // Generate a 6-digit OTP
+    const otpExpiresAt = new Date(Date.now() + 15 * 60 * 1000); // OTP expires in 15 minutes
+
+    // Find the user by email and update with new OTP and expiration time
+    const user = await User.findOneAndUpdate(
+      { email },
+      { otp, otpExpiresAt },
+      { new: true } // Just update the user; no upsert
+    );
+
+    if (!user) {
+      return res.status(400).json({ message: 'User not found' });
+    }
+
+    // Send OTP to user's email
+    await transporter.sendMail({
+      from: 'rathodritik259@gmail.com',
+      to: email,
+      subject: 'Your OTP Code',
+      text: `Your OTP code is ${otp}`,
+    });
+
+    res.status(200).json({ message: 'OTP sent to your email!' });
+  } catch (error) {
+    console.error('Failed to send OTP:', error.message);
+    res.status(500).json({ message: 'Failed to send OTP. Please try again later.' });
+  }
+});
+app.post('/verifyOtp', async (req, res) => {
+  const { email, otp } = req.body;
+
+  try {
+    // Find the user by email
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found', errorType: 'UserNotFound' });
+    }
+
+    // Check if OTP matches and if it has not expired
+    if (user.otp !== otp || new Date() > user.otpExpiresAt) {
+      return res.status(401).json({ message: 'Invalid or expired OTP', errorType: 'InvalidOtp' });
+    }
+
+    // OTP is valid, do NOT clear the OTP or expiration
+    // They will be updated when a new OTP is generated.
+
+    // Generate a JWT token, same as in login
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+
+    // Respond with the token and user details
+    res.json({ message: 'OTP verified successfully!', token, username: user.fullname, userId: user._id });
+  } catch (error) {
+    console.error('OTP verification failed:', error.message);
+    res.status(500).json({ message: 'OTP verification failed. Please try again later.', errorType: error.message });
+  }
+});
+
+
+
+app.post('/login', async (req, res) => {
+  const { mobileNumber, password } = req.body;
+
+  try {
+    // Find user by mobile number
+    const user = await User.findOne({ contact: mobileNumber });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found', errorType: 'UserNotFound' });
+    }
+
+    // Check if the password matches
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: 'Invalid credentials', errorType: 'InvalidPassword' });
+    }
+
+    // Generate the JWT token
+
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+
+    // Respond with token and user details
+    res.json({ token, username: user.fullname, userId: user._id });
+  } catch (error) {
+    console.error('Login failed:', error.message);
+    res.status(500).json({ message: 'Login failed. Please try again later.', errorType: error.message });
   }
 });

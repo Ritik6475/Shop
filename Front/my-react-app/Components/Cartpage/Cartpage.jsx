@@ -1,287 +1,287 @@
-            import React, { useEffect, useState } from 'react';
-            import axios from 'axios';
-            import { useNavigate } from 'react-router-dom';
-            import './Cartpage.css';
-            import DeliveryAddress from '../DeliveryAddress';
-            import Footer from '../Footer';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import './Cartpage.css';
+import DeliveryAddress from '../DeliveryAddress';
+import Footer from '../Footer';
+import { FaFire } from 'react-icons/fa';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import axiosInstance from '@axios';
-            
-const Cartpage = ({ userId,isLoggedIn }) => {
-              const [refreshTrigger, setRefreshTrigger] = useState(false);
-              const [CartCount, setCartCount] = useState(0); // State to hold the cart count
-              const [couponCodes, setCouponCodes] = useState({}); // Temporary state to hold coupon codes for each product
 
+const Cartpage = ({ userId, isLoggedIn }) => {
+  const [refreshTrigger, setRefreshTrigger] = useState(false);
+  const [CartCount, setCartCount] = useState(0); // State to hold the cart count
+  const [couponCodes, setCouponCodes] = useState({}); // Temporary state to hold coupon codes for each product
 
+  const [cart, setCart] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [totalItems, setTotalItems] = useState(0);
+  const [deliveryAddress, setDeliveryAddress] = useState({});
+  const [couponCode, setCouponCode] = useState('');
+  const [discountApplied, setDiscountApplied] = useState(false);
+  const [discountedPrice, setDiscountedPrice] = useState(0);
+  const [deliveryFee, setDeliveryFee] = useState(0);
+  const [animationClass, setAnimationClass] = useState('');
 
-              const [cart, setCart] = useState([]);
-              const [totalPrice, setTotalPrice] = useState(0);
-              const [totalItems, setTotalItems] = useState(0);
-              const [deliveryAddress, setDeliveryAddress] = useState({});
-              const [couponCode, setCouponCode] = useState('');
-              const [discountApplied, setDiscountApplied] = useState(false);
-              const [discountedPrice, setDiscountedPrice] = useState(0);
-              const [deliveryFee, setDeliveryFee] = useState(0);
-              const [animationClass, setAnimationClass] = useState('');
+  const navigate = useNavigate();
 
-              const navigate = useNavigate();
-
-              
-    useEffect(() => {
-      if (refreshTrigger) {
-        
-          window.location.reload();
-      }
-  }, [refreshTrigger]);
-  
-
-  
-  
   useEffect(() => {
-    
+    if (refreshTrigger) {
+      window.location.reload();
+    }
+  }, [refreshTrigger]);
 
-  window.scrollTo({
-    top: 120,
-    behavior: 'smooth'
-  });
-}, [userId]);
-
-
-
-              useEffect(() => {
-                const fetchCartData = async () => {
-                  try {
-
-
-                    const response = await axiosInstance.post('/getCartData', { userId });
-                    const cartData = response.data.cart.map(item => ({
-                      ...item,
-                      quantity: item.quantity || 1,
-                      productCouponCode: '',
-                      buyNowDiscountedPrice: null,
-                    }));
-                    setCart(cartData);
-                    calculateTotals(cartData);
-                  } catch (error) {
-                    console.error('Error fetching cart data:', error);
-                  }
-                };
-
-                if (userId) {
-                  fetchCartData();
-                }
-              }, [userId]);
+  useEffect(() => {
+    window.scrollTo({
+      top: 120,
+      behavior: 'smooth'
+    });
+  }, [userId]);
 
 
 
+  useEffect(() => {
+    const fetchCartData = async () => {
+      try {
+        const response = await axiosInstance.post('/getCartData', { userId });
+        const cartData = response.data.cart.map(item => ({
+          ...item,
+          quantity: item.quantity || 1,
+          productCouponCode: '',
+          buyNowDiscountedPrice: null,
+        }));
+        setCart(cartData);
+        calculateTotals(cartData);
+      } catch (error) {
+        console.error('Error fetching cart data:', error);
+      }
+    };
 
-              useEffect(() => {
-                // Fetch cart count from the API
-                const fetchCartCount = async () => {
-                    if (!userId) {
-                        return;
-                    }
-        
-                    try {
-                        const response = await axiosInstance.post('/getCartCount', { userId,isLoggedIn});
-                        setCartCount(response.data.cartCount);
-                    } catch (error) {
-                        console.error('Error fetching cart count:', error);
-                    }  
-                };  
-        
-                fetchCartCount();
-            }, [userId]);
-        
+    if (userId) {
+      fetchCartData();
+    }
+  }, [userId]);
 
+  useEffect(() => {
+    // Fetch cart count from the API
+    const fetchCartCount = async () => {
+      if (!userId) {
+        return;
+      }
 
-            
+      try {
+        const response = await axiosInstance.post('/getCartCount', { userId, isLoggedIn });
+        setCartCount(response.data.cartCount);
+      } catch (error) {
+        console.error('Error fetching cart count:', error);
+      }
+    };
 
+    fetchCartCount();
+  }, [userId]);
 
+  const removeFromCart = async (productId) => {
+    try {
+      await axiosInstance.post('/removeFromCart', { userId, productId });
+      const updatedCart = cart.filter(product => product._id !== productId);
+      setCart(updatedCart);
+      calculateTotals(updatedCart);
+      
+      toast.success('Product removed from cart!');
 
-              
-              const removeFromCart = async (productId) => {
-                try {
-                  await axiosInstance.post('/removeFromCart', { userId, productId });
-                  const updatedCart = cart.filter(product => product._id !== productId);
-                  setCart(updatedCart);
-                  calculateTotals(updatedCart);
-                  setRefreshTrigger(true);
+      setTimeout(() => {
+        setRefreshTrigger(true);
+      }, 1500);
+  
 
-                } catch (error) {
-                  console.error('Error removing product from cart:', error);
-                }
-              };
-            
-                       
-              
+    } catch (error) {
+      console.error('Error removing product from cart:', error);
+      toast.error('Failed to remove product from cart.');
+    }
+  };
 
-              const calculateTotals = (cart) => {
-                let total = 0;
-                let items = 0;
-                cart.forEach(product => {
-                  total += product.new_price * product.quantity;
-                  items += product.quantity;
-                });
-                setTotalPrice(total);
-                setTotalItems(items);
+  const calculateTotals = (cart) => {
+    let total = 0;
+    let items = 0;
+    cart.forEach(product => {
+      total += product.new_price * product.quantity;
+      items += product.quantity;
+    });
+    setTotalPrice(total);
+    setTotalItems(items);
 
-                if (discountApplied) {
-                  setDiscountedPrice(total * 0.9);
-                } else {
-                  setDiscountedPrice(total);
-                }
+    if (discountApplied) {
+      setDiscountedPrice(total * 0.9);
+    } else {
+      setDiscountedPrice(total);
+    }
 
-                // Calculate delivery fee
-                const fee = total >= 1000 ? 0 : 100;
-                setDeliveryFee(fee);
-              };
+    // Calculate delivery fee
+    const fee = total >= 1000 ? 0 : 100;
+    setDeliveryFee(fee);
+  };
 
-              
-              const handleCouponChange = (productId, size, color, couponCodeValue) => {
-                const uniqueKey = `${productId}-${size}-${color}`;
-                setCouponCodes(prevCodes => ({
-                  ...prevCodes,
-                  [uniqueKey]: couponCodeValue
-                }));
-              };
-              
-              
-              const applyCouponForProduct = (productId, size, color) => {
-                const updatedCart = cart.map(product => {
-                  if (product._id === productId && product.size === size && product.color === color) {
-                    const enteredCouponCode = couponCodes[`${productId}-${size}-${color}`]; // Unique key based on productId, size, and color
-              
-                    if (enteredCouponCode === 'PROMO2024') {
-                      if (!product.buyNowDiscountedPrice) {
-                        product.buyNowDiscountedPrice = product.new_price * 0.9; // Apply 10% discount
-                        alert('Coupon applied! You have received a 10% discount on this product.');
-                      } else {
-                        alert('Coupon already applied for this product.');
-                      }
-                    } else {
-                      alert('Invalid coupon code.');
-                    }
-                  }
-                  return product;
-                });
-              
-                setCart(updatedCart);
-                calculateTotals(updatedCart); // Recalculate totals after applying coupon
-              };
-              
+  const handleCouponChange = (productId, size, color, couponCodeValue) => {
+    const uniqueKey = `${productId}-${size}-${color}`;
+    setCouponCodes(prevCodes => ({
+      ...prevCodes,
+      [uniqueKey]: couponCodeValue
+    }));
+  };
 
-              const applyCouponForBundle = () => {
-                if (couponCode === 'PROMO2024') {
-                  if (!discountApplied) {
-                    const discountedTotal = totalPrice * 0.9;
-                    setDiscountedPrice(discountedTotal);
-                    setDiscountApplied(true);
-                    setAnimationClass('coupon-applied');
-                    setTimeout(() => setAnimationClass(''), 3000); // Remove class after animation
-                    alert('Coupon applied! You have received a 10% discount on your bundle.');
-                  } else {
-                    alert('Coupon already applied.');
-                  }
-                } else {
-                  alert('Invalid coupon code.');
-                }
-              };
+  const applyCouponForProduct = (productId, size, color) => {
+    const updatedCart = cart.map(product => {
+      if (product._id === productId && product.size === size && product.color === color) {
+        const enteredCouponCode = couponCodes[`${productId}-${size}-${color}`]; // Unique key based on productId, size, and color
 
-              const increaseQuantity = (productId, size, color) => {
-                const updatedCart = cart.map(product => {
-                  if (product._id === productId && product.size === size && product.color === color) {
-                    product.quantity += 1;
-                  }
-                  return product;
-                });
-                setCart(updatedCart);
-                calculateTotals(updatedCart);
-              };
-              
-              const decreaseQuantity = (productId, size, color) => {
-                const updatedCart = cart.map(product => {
-                  if (product._id === productId && product.size === size && product.color === color && product.quantity > 1) {
-                    product.quantity -= 1;
-                  }
-                  return product;
-                });
-                setCart(updatedCart);
-                calculateTotals(updatedCart);
-              };
-              
+        if (enteredCouponCode === 'PROMO2024') {
+          if (!product.buyNowDiscountedPrice) {
+            product.buyNowDiscountedPrice = product.new_price * 0.9; // Apply 10% discount
+            toast.success('Coupon applied! You have received a 10% discount on this product.');
+          } else {
+            toast.info('Coupon already applied for this product.');
+          }
+        } else {
+          toast.error('Invalid coupon code.');
+        }
+      }
+      return product;
+    });
 
+    setCart(updatedCart);
+    calculateTotals(updatedCart); // Recalculate totals after applying coupon
+  };
 
+  const applyCouponForBundle = () => {
+    if (couponCode === 'PROMO2024') {
+      if (!discountApplied) {
+        const discountedTotal = totalPrice * 0.9;
+        setDiscountedPrice(discountedTotal);
+        setDiscountApplied(true);
+        setAnimationClass('coupon-applied');
+        setTimeout(() => setAnimationClass(''), 3000); // Remove class after animation
+        toast.success('Coupon applied! You have received a 10% discount on your bundle.');
+      } else {
+        toast.info('Coupon already applied.');
+      }
+    } else {
+      toast.error('Invalid coupon code.');
+    }
+  };
 
+  const increaseQuantity = (productId, size, color) => {
+    const updatedCart = cart.map(product => {
+      if (product._id === productId && product.size === size && product.color === color) {
+        product.quantity += 1;
+      }
+      return product;
+    });
+    setCart(updatedCart);
+    calculateTotals(updatedCart);
+  };
 
+  const decreaseQuantity = (productId, size, color) => {
+    const updatedCart = cart.map(product => {
+      if (product._id === productId && product.size === size && product.color === color && product.quantity > 1) {
+        product.quantity -= 1;
+      }
+      return product;
+    });
+    setCart(updatedCart);
+    calculateTotals(updatedCart);
+  };
 
+  const buyNow = (product) => {
+    if (!product.available) {
+      toast.error('Sorry, this product is out of stock.');
+      return;
+    }
 
-              const buyNow = (product) => {
-                if (!product.available) {
-                  alert('Sorry, this product is out of stock.');
-                  return;
-                }
+    const finalPrice = product.buyNowDiscountedPrice || product.new_price * product.quantity;
 
-                const finalPrice = product.buyNowDiscountedPrice || product.new_price * product.quantity;
+    navigate('/buynow', {
+      state: {
+        amount: finalPrice,
+        quantity: product.quantity,
+        productId: product._id,
+        userId,
+        size: product.size,
+        color: product.color,
+        deliveryAddress
+      }
+    });
+  };
 
-                navigate('/buynow', { 
-                  state: { 
-                    amount: finalPrice,
-                    quantity: product.quantity,
-                    productId: product._id,
-                    userId,
-                    size: product.size,
-                    color: product.color,
-                    deliveryAddress 
-                  } 
-                });
-              };
+  const checkout = async () => {
+    const outOfStockProducts = cart.filter(product => !product.available);
 
-              const checkout = async () => {
-                const outOfStockProducts = cart.filter(product => !product.available);
+    if (outOfStockProducts.length > 0) {
+      toast.error('Some products are out of stock. Please remove them from your cart to proceed.');
+      return;
+    }
 
-                if (outOfStockProducts.length > 0) {
-                  alert('Some products are out of stock. Please remove them from your cart to proceed.');
-                  return;
-                }
+    try {
+      const products = cart.map(product => ({
+        productId: product._id,
+        productName: product.productname,
+        price: product.new_price,
+        quantity: product.quantity,
+        size: product.size,
+        color: product.color,
+        image: product.image,
+      }));
 
-                try {
-                  const products = cart.map(product => ({
-                    productId: product._id,
-                    productName: product.productname,
-                    price: product.new_price,
-                    quantity: product.quantity,
-                    size: product.size,
-                    color: product.color,
-                    image: product.image,
-                  }));
+      const finalTotal = discountedPrice + deliveryFee;
 
-                  const finalTotal = discountedPrice + deliveryFee;
+      const response = await axiosInstance.post('/saveBundleOrder', { userId, products, totalAmount: finalTotal, deliveryAddress });
 
-                  const response = await axiosInstance.post('/saveBundleOrder', { userId, products, totalAmount: finalTotal, deliveryAddress });
-
-                  if (response.status === 200) {
-                    navigate('/buynow', { 
-                      state: { 
-                        amount: finalTotal, 
-                        productId: null, 
-                        userId, 
-                        bundleOrderId: response.data.bundleOrderId, 
-                        deliveryAddress 
-                      } 
-                    });
-                  } else {
-                    console.error('Error saving bundle order:', response.data.message);
-                    alert('Error saving bundle order. Please try again.');
-                  }
-                } catch (error) {
-                  console.error('Error saving bundle order:', error);
-                  alert('Error saving bundle order. Please try again.');
-                }
-              };
+      if (response.status === 200) {
+        navigate('/buynow', {
+          state: {
+            amount: finalTotal,
+            productId: null,
+            userId,
+            bundleOrderId: response.data.bundleOrderId,
+            deliveryAddress
+          }
+        });
+      } else {
+        console.error('Error saving bundle order:', response.data.message);
+        toast.error('Error saving bundle order. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error saving bundle order:', error);
+      toast.error('Error saving bundle order. Please try again.');
+    }
+  };
 
               return (
                 <div className={`cart-page ${animationClass}`}>
+<ToastContainer 
+  position="top-right" 
+  autoClose={3000} 
+  hideProgressBar={false} 
+  newestOnTop={false} 
+  closeOnClick 
+  rtl={false} 
+  pauseOnFocusLoss 
+  draggable 
+  pauseOnHover 
+  theme="dark" 
+  toastStyle={{ 
+    backgroundColor: 'White', 
+    color: 'Black', 
+    fontSize: '16px',
+    borderRadius: '8px',
+    padding: '0px',
+    width:'350px',
+    marginLeft:'00px',
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
+  }}
+/>
+            
                   <DeliveryAddress userId={userId} onAddressChange={setDeliveryAddress} />
                   
                   
@@ -357,7 +357,7 @@ const Cartpage = ({ userId,isLoggedIn }) => {
                   </p>
                 )}
               </div>
-                          
+                           
                           <div className='grid-item product-details' style={{marginLeft:'40px',width:'100%'}}>
                             <p> Color: <span className="color-dot" style={{ backgroundColor: product.color }}></span>{product.color}</p>
                             
@@ -378,8 +378,9 @@ const Cartpage = ({ userId,isLoggedIn }) => {
       className="coupon-code-input"
       value={couponCodes[`${product._id}-${product.size}-${product.color}`] || ''}
       onChange={(e) => handleCouponChange(product._id, product.size, product.color, e.target.value)}
+      style={{marginTop:'7px'}}
     />
-    <button  className="apply-coupon-button" style={{padding:'5px'}} onClick={() => applyCouponForProduct(product._id, product.size, product.color)}>
+    <button  className="apply-coupon-button" style={{padding:'5px',marginLeft:'-5px'}} onClick={() => applyCouponForProduct(product._id, product.size, product.color)}>
       Apply
     </button>
   </div>
@@ -450,12 +451,14 @@ const Cartpage = ({ userId,isLoggedIn }) => {
 
   <hr />
 
+
   <div className='summary-item'>
     <span style={{ marginTop: '20px', fontWeight: 'bold' }}>Total Amount:</span>
     <span style={{ marginTop: '20px', color: '#3E3F45' }}>
       ₹{(discountedPrice + deliveryFee).toFixed(2)}
     </span>
   </div>
+
 
   <div className='coupon-summary'>
     <div className="coupon-header">
@@ -468,10 +471,27 @@ const Cartpage = ({ userId,isLoggedIn }) => {
         className="coupon-code-input"
         value={couponCode}
         onChange={(e) => setCouponCode(e.target.value)}
+        style={{marginTop:'4px'}}
       />
       <button className="apply-bundle-coupon-button" onClick={applyCouponForBundle}>Apply Coupon</button>
     </div>
   </div>  
+
+  {discountApplied && (
+       
+       <div className="coupon-applied-message">
+  <img 
+    src="https://static1.hkrtcdn.com/mbnext/static/media/cart/coupon.png" 
+    alt="Coupon Applied" 
+    className="coupon-icon" 
+  />
+  <span className="coupon-message">
+    <span style={{color:'Black',fontSize:'15px'}}>Coupon Applied:</span><strong style={{marginLeft:'7px'}}>₹{(totalPrice - discountedPrice).toFixed(2)} Off on this Order</strong>
+  </span>
+</div>
+       
+       )}
+
 
   <button
     className='checkout-button'

@@ -11,7 +11,6 @@ const Newsletter = () => {
     const fetchSubscribers = async () => {
       try {
         const response = await axiosInstance.get('/getSubscribers');
-        // Reverse the array to show the newest subscribers first
         setSubscribers(response.data.reverse());
         setLoading(false);
       } catch (error) {
@@ -38,6 +37,13 @@ const Newsletter = () => {
     }
   };
 
+  const checkGroupMembership = async () => { 
+ 
+    window.open('https://web.whatsapp.com/', '_blank');
+  
+  };  
+ 
+
   if (loading) return <p>Loading...</p>;
 
   return (
@@ -47,6 +53,10 @@ const Newsletter = () => {
       </div>
 
       <h2>Newsletter Subscribers</h2>
+
+      <button onClick={checkGroupMembership} className="check-group-btn">
+        Check Group Membership
+      </button>
 
       <table className="subscribers-table">
         <thead>

@@ -47,7 +47,7 @@ const Homepage = () => {
         setMessage('Please enter a valid 10-digit WhatsApp number');
       }
     };
-    
+      
   const bannerSettings = {
     dots: true,
     infinite: true,

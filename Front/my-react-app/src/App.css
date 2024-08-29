@@ -5,12 +5,20 @@
 body{
  
     
-    background-color: White;
+    background-color: black;
     margin-top: 60px;
     
+    background: linear-gradient(to right, #3E3F45, black);
 
  
 }
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 
 
 
