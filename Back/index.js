@@ -43,7 +43,7 @@ const corsOptions = {
 // Apply CORS middleware to all routes
 
  app.use(cors(corsOptions));
-
+  
 // Additional middlewares
 app.use(helmet({
   crossOriginResourcePolicy: false,  // Disable cross-origin resource policy
