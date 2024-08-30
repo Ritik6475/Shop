@@ -94,7 +94,7 @@ const Selectproductpage = ({ userId, isLoggedIn }) => {
             if (response.data.error) {
                 toast.error(response.data.error);
             } else {
-                toast.success(`${response.data.message}. Please review your delivery address at the top of the cart page.`);
+                toast.success(`${response.data.message}.`);
             
                 setTimeout(() => {
                     setRefreshTrigger(true);

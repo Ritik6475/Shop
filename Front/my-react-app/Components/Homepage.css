@@ -28,7 +28,7 @@ background-color: White;
 
 @keyframes marquee {
   0% {
-    transform: translateX(0);
+    transform: translateX(0);  
   }
   100% {
     transform: translateX(-100%);
@@ -42,7 +42,7 @@ cursor: pointer;
 .homepage {
     text-align: center;
     margin-top: 100px;
-
+    
   }
    
   .banner-slider{

@@ -117,7 +117,7 @@ const Cartpage = ({ userId, isLoggedIn }) => {
     } else {
       setDiscountedPrice(total);
     }
-
+  
     // Calculate delivery fee
     const fee = total >= 1000 ? 0 : 100;
     setDeliveryFee(fee);

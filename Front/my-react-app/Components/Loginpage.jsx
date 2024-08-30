@@ -28,7 +28,7 @@ const Loginpage = ({ onLoginSuccess, onLogout }) => {
         window.scrollTo(0, 0);
     }, []);
 
-
+  
     useEffect(() => {
         const timer = setInterval(() => {
           setTimeLeft((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
@@ -267,6 +267,7 @@ const Loginpage = ({ onLoginSuccess, onLogout }) => {
       border: 'none',
       borderRadius: '8px',
       fontSize: '16px',
+      padding:'8px',
       cursor: 'pointer',
       transition: 'background-color 0.3s ease'
     }}

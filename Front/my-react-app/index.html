@@ -5,43 +5,34 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
-    <meta name="viewport" content="width=800, initial-scale=1.0" />
+    <!-- Forces desktop view on mobile devices -->
+    <meta name="viewport" content="width=1024, initial-scale=0.5, maximum-scale=0.5, user-scalable=no" />
 
     <title>Shree Fashion</title>
-    <style>  
-    
-    /* Prevent horizontal scrolling */
-html, body {
-    overflow-x: hidden;
+    <style>
+      /* Prevent horizontal scrolling */
+      html, body {
+          overflow-x: hidden;
+      }
 
-}  
+      /* Hide vertical scrollbar */
+      body {
+          overflow-y: scroll;
+          scrollbar-width: none; /* Firefox */
+      }
 
-/* Hide vertical scrollbar */
-body {
-    overflow-y: scroll;
-    scrollbar-width: none; /* Firefox */
-}
-
-/* For WebKit-based browsers (Chrome, Safari) */
-body::-webkit-scrollbar {
-    display: none; /* Safari and Chrome */
-}
-  
-
-
-
-
+      /* For WebKit-based browsers (Chrome, Safari) */
+      body::-webkit-scrollbar {
+          display: none; /* Safari and Chrome */
+      }
     </style>
   </head>
   <body>
     <div id="root"></div>
 
-
     <script type="module" src="/src/main.jsx"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
-
   </body>
 </html>
-
