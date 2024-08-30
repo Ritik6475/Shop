@@ -17,7 +17,7 @@ const EditProduct = () => {
         imagefour: '',
         imagefive: '',
         imagesix: '',
-        imageseven: '',
+        imageseven: '',  
         imageeight: '',
         category: '',
         description: '',
@@ -134,14 +134,19 @@ const EditProduct = () => {
                     />
                 </label>
                 <label>
-                    Category:
-                    <input
-                        type="text"
-                        name="category"
-                        value={formData.category}
-                        onChange={handleChange}
-                        required
-                    />
+                  
+                  Category
+                <select name="category" value={formData.category} onChange={handleChange}>
+    <option value="">Select Category</option>
+    <option value="Saree">Saree</option>
+    <option value="Regional Attires">Regional Attires</option>
+    <option value="Women Ethnic">Women Ethnic</option>
+    <option value="Women Western">Women Western</option>
+    <option value="Accessories">Accessories</option>
+    <option value="Salwar & Suits">Salwar & Suits</option>  
+</select>
+              
+              
                 </label>
                 <label>
                     Description:
@@ -229,7 +234,7 @@ const EditProduct = () => {
                 <label>
                     Sizes (comma separated):
                     <input
-                        type="text"
+                        type="text"  
                         name="sizes"
                         value={sizes.join(', ')}
                         onChange={(e) => setSizes(e.target.value.split(',').map(size => size.trim()))}

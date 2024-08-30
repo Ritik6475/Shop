@@ -13,7 +13,7 @@ import Adminpage from '../Components/Adminpage/Adminpage';
 import PasswordPrompt from '../Components/PasswordPrompt'; // Import the PasswordPrompt
 import axiosInstance from '@axios';
 import Newsletter from '../Components/Adminpage/Newsletter';
-
+  
 import Orderpage from '../Components/Orderpage/Orderpage';
 import Addproduct from '../Components/Adminpage/Addproduct';
 import Allproducts from '../Components/Adminpage/Allproducts';

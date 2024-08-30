@@ -3,15 +3,20 @@ import axios from 'axios';
 import './Card2.css';
 import { Link } from 'react-router-dom';  
 import Footer from './Footer';
-import ProductFilter from './ProductFilter';  
+import ProductFilter from './ProductFilter';    
 import axiosInstance from '@axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+ 
 const Card2 = ({ category, isLoggedIn, userId }) => {
     const [products, setProducts] = useState([]);
     const [hoveredProduct, setHoveredProduct] = useState(null);
     const [selectedColor, setSelectedColor] = useState('');
     const [selectedSize, setSelectedSize] = useState('');
     const [filteredProducts, setFilteredProducts] = useState([]);
+
+
 
     useEffect(() => {
         const fetchProductsByCategory = async () => {
@@ -30,17 +35,17 @@ const Card2 = ({ category, isLoggedIn, userId }) => {
 
     const addToCart = async (product) => {
         if (!isLoggedIn) {
-            alert('Please log in to add items to your cart.');
+            toast.error('Please log in to add items to your cart.');
             return;
         }
 
         if (product.colors.length > 0 && !selectedColor) {
-            alert('Please select a color.');
+            toast.info('Please select a color.');
             return;
         }
 
         if (product.sizes.length > 0 && !selectedSize) {
-            alert('Please select a size.');
+            toast.info('Please select a size.');
             return;
         }
 
@@ -51,12 +56,14 @@ const Card2 = ({ category, isLoggedIn, userId }) => {
                 size: selectedSize || '',
                 color: selectedColor || ''
             });
-            alert(response.data.message);
+            
+            toast.success(response.data.message);
+
             window.location.reload();  // Refresh the page
         
         } catch (error) {
             console.error('Error adding to cart:', error);
-            alert('Failed to add product to cart');
+            toast.error('Failed to add product to cart');
         }
     };
 
@@ -126,6 +133,9 @@ const Card2 = ({ category, isLoggedIn, userId }) => {
 
     return (
         <div className='card2-kards'>
+            
+<ToastContainer/>
+
             <div className="card2-filter-container">
                 <ProductFilter 
                     products={products} 

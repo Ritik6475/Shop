@@ -43,7 +43,7 @@ const Homepage = () => {
         setTimeout(() => {
           setMessage('');
         }, 3000);
-      } else {
+      } else {  
         setMessage('Please enter a valid 10-digit WhatsApp number');
       }
     };
@@ -141,14 +141,16 @@ const Homepage = () => {
     <div class="recently-launched-container">
         <h2 class="recently-launched-title">Recently Launched Sarees</h2>
     </div>
-</div>
+</div>    
 
       
       <Card3 category={category1}/>
         <hr />
 
       <div className="price-section">
+        
         <h2>SHOP BY PRICE</h2>
+
        
         <div className="price-categories">
           {priceCategories.map((priceCategory) => (

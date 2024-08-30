@@ -67,17 +67,18 @@ function Navbar({ onProfileClick, isLoggedIn, username, userId }) {
         <p>Subscribe on newsletter to get notifications about best offers</p>
     </div>
   </div>
-</div>
+</div>  
+
             <div className="search" >
-                <input
-                    className="input"  
+                <input   
+                    className="input"    
                     type="text"
                     placeholder="Search for Price, Products, Brands and More"
                     value={searchQuery}
                     onChange={handleInputChange}
                     onKeyPress={(event) => event.key === 'Enter' && handleSearch()}
                 />
-                <FaSearch className="searchicon" onClick={handleSearch} />
+                <FaSearch className="searchicon" onClick={handleSearch} style={{marginTop:'-18px'}} />
             </div>
             <Link className="logo-img" to="/">
 
@@ -101,7 +102,7 @@ function Navbar({ onProfileClick, isLoggedIn, username, userId }) {
 
                                     </Link>
                         </div>
-                    </div>  
+                    </div>    
   
 
                     <div className="profile-user">

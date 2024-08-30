@@ -31,7 +31,7 @@ mongoose.connect("mongodb+srv://rathodritik259:1Q2w3e4r5t@cluster123.hmrpy.mongo
 
 // CORS configuration
 
-// app.use(cors());  
+// app.use(cors());   
 
 const corsOptions = {
   origin: 'https://shreejee-attires.web.app',  // Your frontend domain
@@ -472,7 +472,7 @@ app.delete('/products/:id', async (req, res) => {
 
         await user.save();
 
-        res.status(200).json({ message: 'Product added to cart' });
+        res.status(200).json({ message: 'Product added to cart check the delivery address at the top of the cart page' });
 
     } catch (error) {
         console.log('Error adding to cart:', error);

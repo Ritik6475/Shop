@@ -7,6 +7,7 @@ import axiosInstance from '@axios';
 
 const Orderpage = ({ userId }) => {
 
+
   const [allOrders, setAllOrders] = useState([]);
   const [bundleOrders, setBundleOrders] = useState([]);
   const [tickets, setTickets] = useState([]);
@@ -19,7 +20,7 @@ const Orderpage = ({ userId }) => {
   const [feedbackData, setFeedbackData] = useState({});
   const [activeSection, setActiveSection] = useState('orders');
   const [showGoToTop, setShowGoToTop] = useState(false);
-
+  
   
   useEffect(() => {
     const fetchOrdersAndTickets = async () => {
@@ -221,10 +222,10 @@ const Orderpage = ({ userId }) => {
   };
 
 
-
+  
   return (
     <div className='order-page'>
-      <h1 className='order-heading'>Your Orders</h1>
+      <h1 className='order-heading' style={{fontFamily:'Nunito', color:'white',marginTop:'20px'}}>Your Orders</h1>
       <div className='toggle-buttons'>
   <button className={`toggle-btn ${activeSection === 'ticket' ? 'active' : ''}`} 
     onClick={() => {

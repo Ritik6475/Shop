@@ -12,7 +12,8 @@ const Loginpage = ({ onLoginSuccess, onLogout }) => {
     const [mobileNumber, setMobileNumber] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
-    const [otp, setOtp] = useState('');
+    const [otp, setOtp] = useState('');  
+
     const [isOtpSent, setIsOtpSent] = useState(false);
     const [showPassword, setShowPassword] = useState(false); 
     const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
@@ -141,13 +142,7 @@ const Loginpage = ({ onLoginSuccess, onLogout }) => {
 
 
     return (
-        <div className={`cont ${showSignup ? 's--signup' : ''}`} style={{ marginTop: '150px', fontFamily: 'Nunito' }}>
-
-         
-
-
-
-
+                <div className={`cont ${showSignup ? 's--signup' : ''}`} style={{ marginTop: '150px', fontFamily: 'Nunito' }}>
 
 
 

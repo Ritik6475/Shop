@@ -160,9 +160,9 @@ const Addproduct = () => {
      
      
 <div style={{marginLeft:'-30px',marginTop:'-50px'}}> <Adminpage />
-          </div>
+          </div>  
 
-      <div className='form-container'>
+      <div className='addproduct-form-container'>
         <h2>Create New Product</h2>
         <form onSubmit={handleSubmit}>
           <input type="number" name="id" placeholder='Product ID' onChange={handleFormChange} />
@@ -213,13 +213,14 @@ const Addproduct = () => {
           </div>
 
           <div>
-            <h3>Sizes</h3>
+            <h3 >Sizes</h3 >
             <input
               type="text"
               value={sizeInput}
               placeholder='Add Sizes'
               onChange={(e) => setSizeInput(e.target.value)}
             />
+
             <button type="button" onClick={handleAddSize}>Add Size</button>
             <div>
               {formData.sizes.map((size, index) => (

@@ -8,7 +8,9 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import 'react-toastify/dist/ReactToastify.css'; 
 import axiosInstance from '@axios';
 
-const Signuppage = ({ }) => {
+
+
+const Signuppage = ({ setShowSignup }) => {
     const [fullname, setFullname] = useState('');
     const [contact, setContact] = useState('');
     const [email, setEmail] = useState('');
@@ -22,8 +24,6 @@ const Signuppage = ({ }) => {
     const [country, setCountry] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-    const navigate = useNavigate();
 
     const handleSignup = async (e) => {
         e.preventDefault();
@@ -52,8 +52,8 @@ const Signuppage = ({ }) => {
             if (response.status >= 200 && response.status < 300) {
                 toast.success('Signup successful!');
                 setTimeout(() => {
-                    navigate('/loginpage');
-                }, 1500);
+                    setShowSignup(false); // Switch back to the login view
+                }, 3000); // Delay of 3 seconds before showing the login page
             } else {
                 toast.error('Signup failed');
             }

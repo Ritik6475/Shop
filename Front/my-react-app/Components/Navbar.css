@@ -10,7 +10,7 @@
 
 html, body {
   overflow-x: hidden;
-}
+}  
 
 body {
   overflow-y: scroll;
@@ -336,6 +336,7 @@ cursor: pointer;
 }
 
 /* Responsive Styles */
+
 @media (max-width: 768px) {
   .logo img {
       height: 40px; /* Adjust for smaller screens */
@@ -344,6 +345,7 @@ cursor: pointer;
   .input {
       height: 35px; /* Adjust for smaller screens */
       font-size: 12px;
+      width: 300px;
   }
 
   .searchicon {
@@ -367,7 +369,7 @@ cursor: pointer;
 .navbar-search {
   flex: 1;
   margin: 0 1rem;
-}
+}  
 
 .search-bar {
   width: 100%;

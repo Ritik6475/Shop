@@ -10,7 +10,7 @@
   min-height: 100vh;
 }
 
-.form-container {
+.addproduct-form-container {
   background: linear-gradient(145deg, #ffffff, #f1f4f6);
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -19,7 +19,7 @@
   max-width: 100%;
 }
 
-.form-container h2 {
+.addproduct-form-container h2 {
   text-align: center;
   margin-bottom: 30px;
   color: #2e3d49;
@@ -28,15 +28,17 @@
   font-weight: bold;
 }
 
-.form-container form {
-  display: flex;
+.addproduct-form-container form {
+  display: flex;  
   flex-direction: column;
 }
 
-.form-container input,
-.form-container select,
-.form-container button {
+.addproduct-form-container input,
+.addproduct-form-container select,
+.addproduct-form-container button {
   margin-bottom: 20px;
+  margin-top: 10px;
+  
   padding: 15px;
   border: 2px solid #cfd8dc;
   border-radius: 10px;
@@ -44,14 +46,14 @@
   transition: all 0.3s ease;
 }
 
-.form-container input:focus,
-.form-container select:focus {
+.addproduct-form-container input:focus,
+.addproduct-form-container select:focus {
   border-color: #ff6f61;
   box-shadow: 0 0 10px rgba(255, 111, 97, 0.4);
   outline: none;
 }
 
-.form-container button {
+.addproduct-form-container button {
   background: linear-gradient(145deg, #ff6f61, #ff8a65);
   color: #fff;
   border: none;
@@ -63,7 +65,7 @@ padding-top: 5px;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.form-container button:hover {
+.addproduct-form-container button:hover {
   background-color: #e64a19;
   box-shadow: 0 6px 20px rgba(230, 74, 25, 0.4);
 }
