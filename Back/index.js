@@ -32,7 +32,7 @@ mongoose.connect("mongodb+srv://rathodritik259:1Q2w3e4r5t@cluster123.hmrpy.mongo
 // CORS configuration
 
 // app.use(cors());   
-
+ 
 const corsOptions = {
   origin: 'https://shreejee-attires.web.app',  // Your frontend domain
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
@@ -1559,3 +1559,39 @@ app.post('/login', async (req, res) => {
     res.status(500).json({ message: 'Login failed. Please try again later.', errorType: error.message });
   }
 });
+
+
+app.get('/order/:orderId', async (req, res) => {
+  try {
+      const user = await User.findOne({ 'allOrders._id': req.params.orderId }, 
+        { 'allOrders.$': 1 }); // Fetch only the matched order
+
+      if (!user || !user.allOrders || user.allOrders.length === 0) {
+          return res.status(404).json({ message: 'Order not found' });
+      }
+
+      const order = user.allOrders[0];
+      res.json(order);
+  } catch (error) {
+      res.status(500).json({ message: 'Server error', error });
+  }
+});
+
+
+app.get('/bundle-order/:bundleOrderId', async (req, res) => {
+  try {
+      const user = await User.findOne({ 'bundleOrders._id': req.params.bundleOrderId }, 
+        { 'bundleOrders.$': 1 }); // Fetch only the matched bundle order
+
+      if (!user || !user.bundleOrders || user.bundleOrders.length === 0) {
+          return res.status(404).json({ message: 'Bundle order not found' });
+      }
+
+      const bundleOrder = user.bundleOrders[0];
+      res.json(bundleOrder);
+  } catch (error) {
+      res.status(500).json({ message: 'Server error', error });
+  }
+});
+
+

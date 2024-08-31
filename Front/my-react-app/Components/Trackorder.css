@@ -1,0 +1,169 @@
+/* Overall Container Styling */
+
+.order-tracking-container {
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+    background: linear-gradient(to bottom, Black, gray);
+    font-family: 'Nunito';
+    margin-top: 120px;
+}
+/* Header Styling */
+.order-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.order-header h1 {
+    font-size: 28px;
+    color: White;
+    margin-top: 20px;
+   margin-left: 50px;
+
+    
+}
+
+/* Order Summary Styling */
+.order-summary {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 40px;
+    background: linear-gradient(to right,Black,#0C090A,#3A3B3C);
+    
+}
+
+
+
+.order-summary h2 {
+    font-size: 24px;
+    color: white;
+    margin-bottom: 20px;
+    margin-left: -635px;
+
+}
+
+.order-summary-item {
+    margin-bottom: 10px;
+    color: white;
+    font-size: 16px;
+    margin-left: 30px;
+
+}
+
+.order-summary-item strong {
+    font-weight: bold;
+}
+
+/* Delivery Progress Styling */
+.delivery-progress-container {
+    background: linear-gradient(to right, Black,black, gray);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: relative;
+    margin-top: -40px;
+    
+}
+
+.delivery-progress-container h2 {
+    font-size: 24px;
+    color: whitesmoke;
+    margin-bottom: 20px;
+    margin-left: -605px;
+
+}
+
+.delivery-progress-container p{
+    color: white;
+}
+.progress-wrapper {
+    position: relative;
+    padding-left: 40px;
+    margin-top: 10px;
+}
+
+.progress-line {
+    position: absolute;
+    left: 15px;
+    top: 0;
+    width: 2px;
+    background: #4CAF50;
+    height: 100%;
+    z-index: 1;
+    margin-left: 65px;
+}
+
+.progress-step {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+    position: relative;
+    padding-left: 30px;
+}
+
+.progress-dot {
+    width: 20px;
+    height: 20px;
+    background: #ffffff;
+    border: 3px solid #4CAF50;
+    border-radius: 50%;
+    position: relative;
+    z-index: 2;
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.progress-dot.active {
+    background: #4CAF50;
+    border-color: #4CAF50;
+}
+
+.progress-content {
+    margin-left: 20px;
+    color: #333;
+}
+
+.progress-content p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+.progress-content p strong {
+    font-weight: bold;
+}
+
+.progress-line {
+    position: absolute;
+    left: 15px;
+    top: 0;
+    width: 2px;
+    background: #4CAF50;
+    height: 0%; /* Start at 0% */
+    z-index: 1;
+    margin-left: 65px;
+    animation: increaseHeight 5s ease-in-out forwards; /* Animation over 3 seconds */
+}
+
+/* Keyframes to animate height */
+@keyframes increaseHeight {
+    from {
+        height: 0%;
+    }
+    to {
+        height: 100%;
+    }
+}
+
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .order-summary, .delivery-progress-container {
+        padding: 15px;
+    }
+    .progress-wrapper {
+        padding-left: 20px;
+    }
+    .progress-step {
+        padding-left: 20px;
+    }
+}

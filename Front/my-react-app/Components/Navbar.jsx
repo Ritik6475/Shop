@@ -69,21 +69,21 @@ function Navbar({ onProfileClick, isLoggedIn, username, userId }) {
   </div>
 </div>  
 
-            <div className="search" >
+            <div className="search"  style={{marginTop:'30px'}} >
                 <input   
                     className="input"    
                     type="text"
                     placeholder="Search for Price, Products, Brands and More"
                     value={searchQuery}
                     onChange={handleInputChange}
-                    onKeyPress={(event) => event.key === 'Enter' && handleSearch()}
+                     onKeyPress={(event) => event.key === 'Enter' && handleSearch()}
                 />
                 <FaSearch className="searchicon" onClick={handleSearch} style={{marginTop:'-18px'}} />
             </div>
             <Link className="logo-img" to="/">
 
-            <div className="logo">
-                <img src="https://aartisto.com/wp-content/uploads/2020/11/myntra.png" alt="logo" />
+            <div className="logo" >
+                <img src="https://i.postimg.cc/CKPFDkWr/Screenshot-2024-08-30-213706.png" alt="logo" />
             </div>
             </Link>
   
@@ -114,6 +114,8 @@ function Navbar({ onProfileClick, isLoggedIn, username, userId }) {
                                
                                 <p className="bag-name">Cart</p>
                             </Link>
+
+                            
                         </div>
                     </div>
                     <div className="profile-user">
@@ -122,6 +124,7 @@ function Navbar({ onProfileClick, isLoggedIn, username, userId }) {
                                 <FaBoxes className="Bag" />
                                 <p className="bag-name">Your Orders</p>
                             </Link>
+
                         
                         </div>
                     </div>

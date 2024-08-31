@@ -200,7 +200,7 @@ const Loginpage = ({ onLoginSuccess, onLogout }) => {
       />
       <button onClick={handleRequestOtp} style={{
         padding: '12px 20px',
-        backgroundColor: '#3F39A0',
+        backgroundColor: '#FF5F1F',
      
         color: 'white',
         border: '1px solid white',
@@ -214,10 +214,10 @@ const Loginpage = ({ onLoginSuccess, onLogout }) => {
       }
       }
       onMouseEnter={e => e.target.style.backgroundColor = '#4F47C8'}
-      onMouseLeave={e => e.target.style.backgroundColor = '#3F39A0'}
+      onMouseLeave={e => e.target.style.backgroundColor = '#FF5F1F'}
     
       >
-        Send OTP
+        Request OTP
       </button>
     </div>
   </div>

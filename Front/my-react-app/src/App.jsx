@@ -18,7 +18,7 @@ import Orderpage from '../Components/Orderpage/Orderpage';
 import Addproduct from '../Components/Adminpage/Addproduct';
 import Allproducts from '../Components/Adminpage/Allproducts';
 import Allorders from '../Components/Adminpage/Allorders';
-
+import Trackorder from '../Components/Trackorder';
 
 
 import { AlertProvider } from '../AlertContext';
@@ -120,6 +120,7 @@ function App() {
 <Route path="/allproduct" element={isAdminAuthorized ? <Allproducts /> : <PasswordPrompt setIsAuthorized={setIsAdminAuthorized} />} />
 <Route path="/allorders" element={isAdminAuthorized ? <Allorders /> : <PasswordPrompt setIsAuthorized={setIsAdminAuthorized} />} />
 <Route path="/newsletter" element={isAdminAuthorized ? <Newsletter /> : <PasswordPrompt setIsAuthorized={setIsAdminAuthorized} />} />
+<Route path="/trackorder/:orderId" element={<Trackorder />} />
 
    
 

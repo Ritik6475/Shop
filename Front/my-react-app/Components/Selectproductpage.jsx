@@ -609,7 +609,6 @@ const Selectproductpage = ({ userId, isLoggedIn }) => {
                 <Card2 category={category} isLoggedIn={isLoggedIn} userId={userId} />
                 </div>
             </div>
-            <Footer />
         </>
     );
 };
